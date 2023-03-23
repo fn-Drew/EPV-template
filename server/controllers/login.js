@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const loginRouter = require("express").Router();
@@ -18,7 +19,6 @@ loginRouter.post("/", async (request, response) => {
 
     const userForToken = {
         username: user.username,
-        // eslint-disable-next-line no-underscore-dangle
         id: user._id,
     };
 
@@ -26,9 +26,7 @@ loginRouter.post("/", async (request, response) => {
         expiresIn: 60 * 60,
     });
 
-    response
-        .status(200)
-        .send({ token, username: user.username, name: user.name });
+    response.status(200).send({ token, username: user.username, id: user._id });
 });
 
 module.exports = loginRouter;

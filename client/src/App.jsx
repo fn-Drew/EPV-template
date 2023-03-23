@@ -1,24 +1,64 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import loginService from "./services/login";
+import recordService from "./services/records";
 import "./App.css";
 
+const handleLogout = () => {
+    window.localStorage.removeItem("loggedRecUserCreds");
+};
+
 function App() {
-    const [count, setCount] = useState(0);
+    const [user, setUser] = useState("");
+    const [username, setUsername] = useState("");
+    const [records, setRecords] = useState("");
+    const [password, setPassword] = useState("");
+
+    const getRecords = async (id) => {
+        const userRecords = await recordService.getAllUserRecords(id);
+        setRecords(userRecords);
+    };
+
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        try {
+            const loggedUser = await loginService.login({ username, password });
+            window.localStorage.setItem(
+                "loggedRecUserCreds",
+                JSON.stringify(user)
+            );
+            // recordService.setToken(user.token);
+            setUser(loggedUser);
+            setUsername("");
+            setPassword("");
+            getRecords(loggedUser.id);
+        } catch (err) {
+            console.log(err.response.data.error);
+        }
+    };
 
     return (
-        <div className="App">
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button type="button" onClick={() => setCount((i) => i + 1)}>
-                    count is {count}
-                </button>
-                <p>
-                    Edit <code>src/App.jsx</code> and save to test HMR
-                </p>
+        <form onSubmit={handleLogin}>
+            <div>
+                username
+                <input
+                    type="text"
+                    value={username}
+                    name="Username"
+                    onChange={({ target }) => setUsername(target.value)}
+                />
             </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
-        </div>
+            <div>
+                password
+                <input
+                    type="password"
+                    value={password}
+                    name="Password"
+                    onChange={({ target }) => setPassword(target.value)}
+                />
+            </div>
+            <div>{records}</div>
+            <button type="submit">login</button>
+        </form>
     );
 }
 

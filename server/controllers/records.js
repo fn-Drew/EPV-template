@@ -7,6 +7,23 @@ recordRouter.get("/", async (request, response) => {
     response.status(200).json(records).end();
 });
 
+recordRouter.get("/:id", async (request, response) => {
+    const userID = request.params.id;
+
+    if (!userID) {
+        response
+            .status(400)
+            .json({
+                error: "user id is required to record a transcription",
+            })
+            .end();
+    }
+
+    const user = await User.findById(userID);
+
+    response.status(200).json(user.records).end();
+});
+
 recordRouter.post("/:id", async (request, response) => {
     const userID = request.params.id;
 
