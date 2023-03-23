@@ -14,7 +14,7 @@ usersRouter.post("/", async (request, response) => {
         response
             .status(401)
             .json({
-                error: "username and passord must be more than 3 characters",
+                error: "username and password must be more than 3 characters",
             })
             .end();
     } else {

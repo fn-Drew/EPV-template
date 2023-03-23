@@ -18,6 +18,7 @@ recordRouter.post("/:id", async (request, response) => {
             })
             .end();
     }
+
     const user = await User.findById(userID);
 
     const updatedRecord = new Record({
@@ -27,10 +28,9 @@ recordRouter.post("/:id", async (request, response) => {
 
     const savedRecord = await updatedRecord.save();
 
-    console.log(savedRecord);
-
     // eslint-disable-next-line no-underscore-dangle
-    user.records = user.records.concat(savedRecord.id);
+    user.records = user.records.concat(savedRecord._id);
+    await user.save();
 
     response.status(200).json(savedRecord).end();
 });
