@@ -19,4 +19,7 @@ module.exports = {
         sourceType: "module",
     },
     plugins: ["react", "react-hooks"],
+    rules: {
+        "import/no-extraneous-dependencies": ["warn"],
+    },
 };
