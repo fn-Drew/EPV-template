@@ -18,6 +18,8 @@ function App() {
         setRecords(userRecords);
     };
 
+    const Records = () => records.map((record) => <div key={record.id}>{record.record}</div>);
+
     const handleLogin = async (event) => {
         event.preventDefault();
         try {
@@ -56,7 +58,7 @@ function App() {
                     onChange={({ target }) => setPassword(target.value)}
                 />
             </div>
-            <div>{records}</div>
+            {records ? <Records /> : null}
             <button type="submit">login</button>
         </form>
     );
