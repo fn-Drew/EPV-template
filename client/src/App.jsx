@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useCallback, useEffect, useState } from "react";
 import loginService from "./services/login";
 import recordService from "./services/records";
@@ -17,29 +18,89 @@ function LoginForm({
     password,
     setUsername,
     setPassword,
+    setShowLoginForm,
+    setShowAccountForm,
 }) {
     return (
-        <form onSubmit={handleLogin}>
-            <div>
-                username
-                <input
-                    type="text"
-                    value={username}
-                    name="Username"
-                    onChange={({ target }) => setUsername(target.value)}
-                />
-            </div>
-            <div>
-                password
-                <input
-                    type="password"
-                    value={password}
-                    name="Password"
-                    onChange={({ target }) => setPassword(target.value)}
-                />
-            </div>
-            <button type="submit">login</button>
-        </form>
+        <>
+            <h1>Login</h1>
+            <form onSubmit={handleLogin}>
+                <div>
+                    username
+                    <input
+                        type="text"
+                        value={username}
+                        name="Username"
+                        onChange={({ target }) => setUsername(target.value)}
+                    />
+                </div>
+                <div>
+                    password
+                    <input
+                        type="password"
+                        value={password}
+                        name="Password"
+                        onChange={({ target }) => setPassword(target.value)}
+                    />
+                </div>
+                <button type="submit">login</button>
+                <button
+                    type="button"
+                    onClick={() => {
+                        setShowLoginForm(false);
+                        setShowAccountForm(true);
+                    }}
+                >
+                    Dont have an account?
+                </button>
+            </form>
+        </>
+    );
+}
+
+function CreateAccountForm({
+    handleAccountCreation,
+    username,
+    password,
+    setUsername,
+    setPassword,
+    setShowLoginForm,
+    setShowAccountForm,
+}) {
+    return (
+        <>
+            <h1>Create Account</h1>
+            <form onSubmit={handleAccountCreation}>
+                <div>
+                    username
+                    <input
+                        type="text"
+                        value={username}
+                        name="Username"
+                        onChange={({ target }) => setUsername(target.value)}
+                    />
+                </div>
+                <div>
+                    password
+                    <input
+                        type="password"
+                        value={password}
+                        name="Password"
+                        onChange={({ target }) => setPassword(target.value)}
+                    />
+                </div>
+                <button type="submit">Create Account</button>
+                <button
+                    type="button"
+                    onClick={() => {
+                        setShowLoginForm(true);
+                        setShowAccountForm(false);
+                    }}
+                >
+                    Already have an account?
+                </button>
+            </form>
+        </>
     );
 }
 
@@ -49,9 +110,16 @@ function App() {
     const [records, setRecords] = useState("");
     const [password, setPassword] = useState("");
 
+    const [showAccountForm, setShowAccountForm] = useState(false);
+    const [showLoginForm, setShowLoginForm] = useState(true);
+
     async function getRecords(id) {
-        const userRecords = await recordService.getAllUserRecords(id);
-        setRecords(userRecords);
+        try {
+            const userRecords = await recordService.getAllUserRecords(id);
+            setRecords(userRecords);
+        } catch (err) {
+            console.error(err.code);
+        }
     }
 
     // on page load check if user has logged in before
@@ -103,13 +171,30 @@ function App() {
 
     return (
         <>
-            {user ? null : (
+            {!user && !showLoginForm ? (
+                false
+            ) : (
                 <LoginForm
                     handleLogin={handleLogin}
                     username={username}
                     password={password}
                     setUsername={setUsername}
                     setPassword={setPassword}
+                    setShowLoginForm={setShowLoginForm}
+                    setShowAccountForm={setShowAccountForm}
+                />
+            )}
+            {!user && !showAccountForm ? (
+                false
+            ) : (
+                <CreateAccountForm
+                    handleLogin={handleLogin}
+                    username={username}
+                    password={password}
+                    setUsername={setUsername}
+                    setPassword={setPassword}
+                    setShowLoginForm={setShowLoginForm}
+                    setShowAccountForm={setShowAccountForm}
                 />
             )}
             {records ? <Records /> : null}
