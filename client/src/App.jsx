@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import loginService from "./services/login";
 import recordService from "./services/records";
 import "./App.css";
@@ -11,6 +11,38 @@ function LogoutButton({ handleLogout }) {
     );
 }
 
+function LoginForm({
+    handleLogin,
+    username,
+    password,
+    setUsername,
+    setPassword,
+}) {
+    return (
+        <form onSubmit={handleLogin}>
+            <div>
+                username
+                <input
+                    type="text"
+                    value={username}
+                    name="Username"
+                    onChange={({ target }) => setUsername(target.value)}
+                />
+            </div>
+            <div>
+                password
+                <input
+                    type="password"
+                    value={password}
+                    name="Password"
+                    onChange={({ target }) => setPassword(target.value)}
+                />
+            </div>
+            <button type="submit">login</button>
+        </form>
+    );
+}
+
 function App() {
     const [user, setUser] = useState("");
     const [username, setUsername] = useState("");
@@ -20,12 +52,6 @@ function App() {
     async function getRecords(id) {
         const userRecords = await recordService.getAllUserRecords(id);
         setRecords(userRecords);
-    }
-
-    function handleLogout() {
-        window.localStorage.removeItem("recUserCreds");
-        setUser(null);
-        setRecords(null);
     }
 
     // on page load check if user has logged in before
@@ -45,50 +71,47 @@ function App() {
         ));
     }
 
-    async function handleLogin(event) {
-        event.preventDefault();
-        try {
-            const loggedUser = await loginService.login({ username, password });
-            window.localStorage.setItem(
-                "recUserCreds",
-                JSON.stringify(loggedUser)
-            );
-            console.log(loggedUser);
-            // recordService.setToken(user.token);
-            getRecords(loggedUser.id);
-            setUser(loggedUser);
-            setUsername("");
-            setPassword("");
-        } catch (err) {
-            console.error(err.response.data.error);
-        }
-    }
+    const handleLogin = useCallback(
+        async (event) => {
+            event.preventDefault();
+            try {
+                const loggedUser = await loginService.login({
+                    username,
+                    password,
+                });
+                window.localStorage.setItem(
+                    "recUserCreds",
+                    JSON.stringify(loggedUser)
+                );
+                // recordService.setToken(user.token);
+                getRecords(loggedUser.id);
+                setUser(loggedUser);
+                setUsername("");
+                setPassword("");
+            } catch (err) {
+                console.error(err.response.data.error);
+            }
+        },
+        [username, password]
+    );
+
+    const handleLogout = useCallback(() => {
+        window.localStorage.removeItem("recUserCreds");
+        setUser(null);
+        setRecords(null);
+    }, []);
 
     return (
         <>
-            {!user ? (
-                <form onSubmit={handleLogin}>
-                    <div>
-                        username
-                        <input
-                            type="text"
-                            value={username}
-                            name="Username"
-                            onChange={({ target }) => setUsername(target.value)}
-                        />
-                    </div>
-                    <div>
-                        password
-                        <input
-                            type="password"
-                            value={password}
-                            name="Password"
-                            onChange={({ target }) => setPassword(target.value)}
-                        />
-                    </div>
-                    <button type="submit">login</button>
-                </form>
-            ) : null}
+            {user ? null : (
+                <LoginForm
+                    handleLogin={handleLogin}
+                    username={username}
+                    password={password}
+                    setUsername={setUsername}
+                    setPassword={setPassword}
+                />
+            )}
             {records ? <Records /> : null}
             {user ? <LogoutButton handleLogout={handleLogout} /> : null}
         </>
