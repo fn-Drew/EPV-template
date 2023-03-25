@@ -21,5 +21,6 @@ module.exports = {
     plugins: ["react", "react-hooks"],
     rules: {
         "import/no-extraneous-dependencies": ["warn"],
+        node: true,
     },
 };
