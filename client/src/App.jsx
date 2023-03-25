@@ -111,7 +111,7 @@ function App() {
     const [password, setPassword] = useState("");
 
     const [showAccountForm, setShowAccountForm] = useState(false);
-    const [showLoginForm, setShowLoginForm] = useState(true);
+    const [showLoginForm, setShowLoginForm] = useState(false);
 
     async function getRecords(id) {
         try {
@@ -127,9 +127,14 @@ function App() {
         const loggedUserJSON = window.localStorage.getItem("recUserCreds");
         if (loggedUserJSON) {
             const currentUser = JSON.parse(loggedUserJSON);
-            getRecords(currentUser.id);
             setUser(currentUser);
+            setShowAccountForm(false);
+            setShowLoginForm(false);
+            getRecords(currentUser.id);
             recordService.setToken(currentUser.token);
+        } else {
+            setShowAccountForm(false);
+            setShowLoginForm(true);
         }
     }, []);
 
@@ -156,6 +161,8 @@ function App() {
                 setUser(loggedUser);
                 setUsername("");
                 setPassword("");
+                setShowAccountForm(false);
+                setShowLoginForm(false);
             } catch (err) {
                 console.error(err.response.data.error);
             }
@@ -167,13 +174,13 @@ function App() {
         window.localStorage.removeItem("recUserCreds");
         setUser(null);
         setRecords(null);
+        setShowLoginForm(true);
+        setShowAccountForm(false);
     }, []);
 
     return (
         <>
-            {!user && !showLoginForm ? (
-                false
-            ) : (
+            {showLoginForm ? (
                 <LoginForm
                     handleLogin={handleLogin}
                     username={username}
@@ -183,10 +190,8 @@ function App() {
                     setShowLoginForm={setShowLoginForm}
                     setShowAccountForm={setShowAccountForm}
                 />
-            )}
-            {!user && !showAccountForm ? (
-                false
-            ) : (
+            ) : null}
+            {showAccountForm ? (
                 <CreateAccountForm
                     handleLogin={handleLogin}
                     username={username}
@@ -196,7 +201,7 @@ function App() {
                     setShowLoginForm={setShowLoginForm}
                     setShowAccountForm={setShowAccountForm}
                 />
-            )}
+            ) : null}
             {records ? <Records /> : null}
             {user ? <LogoutButton handleLogout={handleLogout} /> : null}
         </>
