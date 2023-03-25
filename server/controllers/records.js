@@ -19,7 +19,10 @@ recordRouter.get("/:id", async (request, response) => {
             .end();
     }
 
-    const user = await User.findById(userID).populate("records", { record: 1 });
+    const user = await User.findById(userID).populate("records", {
+        record: 1,
+        date: 1,
+    });
 
     response.status(200).json(user.records).end();
 });
@@ -41,6 +44,7 @@ recordRouter.post("/:id", async (request, response) => {
     const updatedRecord = new Record({
         record: request.body.record,
         user: userID,
+        date: new Date(),
     });
 
     const savedRecord = await updatedRecord.save();

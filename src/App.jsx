@@ -140,7 +140,10 @@ function App() {
 
     function Records() {
         return records.map((record) => (
-            <div key={record.id}>{record.record}</div>
+            <div key={record.id}>
+                <div>{record.record}</div>
+                <div>{record.date}</div>
+            </div>
         ));
     }
 

@@ -12,6 +12,10 @@ const recordSchema = new mongoose.Schema({
         required: true,
         ref: "User",
     },
+    date: {
+        type: Date,
+        required: true,
+    },
 });
 
 recordSchema.set("toJSON", {
