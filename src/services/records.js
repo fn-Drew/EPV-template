@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "/api/records/";
+const baseUrl = "/records/";
 
 let token = null;
 
