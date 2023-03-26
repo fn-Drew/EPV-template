@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 import React, { useCallback, useEffect, useState } from "react";
 import loginService from "./services/login";
 import recordService from "./services/records";
+import userService from "./services/users";
 import "./App.css";
 
 function LogoutButton({ handleLogout }) {
@@ -147,6 +149,21 @@ function App() {
         ));
     }
 
+    const handleAccountCreation = useCallback(
+        async (event) => {
+            event.preventDefault();
+            try {
+                await userService.create({
+                    username,
+                    password,
+                });
+            } catch (err) {
+                console.error(err);
+            }
+        },
+        [username, password]
+    );
+
     const handleLogin = useCallback(
         async (event) => {
             event.preventDefault();
@@ -196,7 +213,7 @@ function App() {
             ) : null}
             {showAccountForm ? (
                 <CreateAccountForm
-                    handleLogin={handleLogin}
+                    handleAccountCreation={handleAccountCreation}
                     username={username}
                     password={password}
                     setUsername={setUsername}

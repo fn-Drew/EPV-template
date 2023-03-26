@@ -36,9 +36,6 @@ app.use("/api/records/", recordRouter);
 app.use(middleware.errorHandler);
 app.use(middleware.tokenExtractor);
 
-app.use(cors());
-app.use(express.json());
-
 if (config.PORT) {
     app.listen(config.PORT, () => {
         console.log(`Server is running on port  ${config.PORT}`);

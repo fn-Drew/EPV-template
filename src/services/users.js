@@ -4,16 +4,11 @@ axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
-const baseUrl = "/login/";
+const baseUrl = "/users/";
 
-const login = async (credentials) => {
+const create = async (credentials) => {
     const response = await axios.post(baseUrl, credentials);
     return response.data;
 };
 
-const createAccount = async (credentials) => {
-    const response = await axios.post(baseUrl, credentials);
-    return response.data;
-};
-
-export default { login, createAccount };
+export default { create };
