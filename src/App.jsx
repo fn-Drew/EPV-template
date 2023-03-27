@@ -8,7 +8,7 @@ import "./App.css";
 
 function LogoutButton({ handleLogout }) {
     return (
-        <button type="button" onClick={handleLogout}>
+        <button className="button" type="button" onClick={handleLogout}>
             logout
         </button>
     );
@@ -26,10 +26,11 @@ function LoginForm({
     return (
         <>
             <h1>Login</h1>
-            <form onSubmit={handleLogin}>
+            <form className="form" onSubmit={handleLogin}>
                 <div>
                     username
                     <input
+                        className="input"
                         type="text"
                         value={username}
                         name="Username"
@@ -39,14 +40,18 @@ function LoginForm({
                 <div>
                     password
                     <input
+                        className="input"
                         type="password"
                         value={password}
                         name="Password"
                         onChange={({ target }) => setPassword(target.value)}
                     />
                 </div>
-                <button type="submit">login</button>
+                <button className="button" type="submit">
+                    login
+                </button>
                 <button
+                    className="button"
                     type="button"
                     onClick={() => {
                         setShowLoginForm(false);
@@ -72,10 +77,11 @@ function CreateAccountForm({
     return (
         <>
             <h1>Create Account</h1>
-            <form onSubmit={handleAccountCreation}>
+            <form className="form" onSubmit={handleAccountCreation}>
                 <div>
                     username
                     <input
+                        className="input"
                         type="text"
                         value={username}
                         name="Username"
@@ -85,14 +91,18 @@ function CreateAccountForm({
                 <div>
                     password
                     <input
+                        className="input"
                         type="password"
                         value={password}
                         name="Password"
                         onChange={({ target }) => setPassword(target.value)}
                     />
                 </div>
-                <button type="submit">Create Account</button>
+                <button className="button" type="submit">
+                    Create Account
+                </button>
                 <button
+                    className="button"
                     type="button"
                     onClick={() => {
                         setShowLoginForm(true);
@@ -142,9 +152,9 @@ function App() {
 
     function Records() {
         return records.map((record) => (
-            <div key={record.id}>
-                <div>{record.record}</div>
-                <div>{record.date}</div>
+            <div className="record" key={record.id}>
+                <div id="transcript">{record.record}</div>
+                <div id="date">{record.date}</div>
             </div>
         ));
     }
@@ -199,7 +209,7 @@ function App() {
     }, []);
 
     return (
-        <>
+        <div className="app">
             {showLoginForm ? (
                 <LoginForm
                     handleLogin={handleLogin}
@@ -222,9 +232,15 @@ function App() {
                     setShowAccountForm={setShowAccountForm}
                 />
             ) : null}
-            {records ? <Records /> : null}
+
+            {records ? (
+                <div className="records-container">
+                    <Records />
+                </div>
+            ) : null}
+
             {user ? <LogoutButton handleLogout={handleLogout} /> : null}
-        </>
+        </div>
     );
 }
 
