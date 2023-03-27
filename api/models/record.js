@@ -3,8 +3,8 @@
 const mongoose = require("mongoose");
 
 const recordSchema = new mongoose.Schema({
-    record: {
-        type: String,
+    encryptedRecord: {
+        type: Object,
         required: true,
     },
     user: {

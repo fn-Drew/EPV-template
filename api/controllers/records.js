@@ -1,6 +1,25 @@
 const recordRouter = require("express").Router();
+const crypto = require("node:crypto");
+const config = require("../utils/config");
 const Record = require("../models/record");
 const User = require("../models/user");
+
+const algorithm = "aes-256-cbc";
+const key = config.CRYPTO_KEY;
+const iv = crypto.randomBytes(16);
+
+function decrypt(text) {
+    const decIV = Buffer.from(text.iv, "hex");
+    const encryptedText = Buffer.from(text.encryptedData, "hex");
+    const decipher = crypto.createDecipheriv(
+        algorithm,
+        Buffer.from(key),
+        decIV
+    );
+    let decrypted = decipher.update(encryptedText);
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
+    return decrypted.toString();
+}
 
 recordRouter.get("/", async (request, response) => {
     const records = await Record.find({});
@@ -19,12 +38,17 @@ recordRouter.get("/:id", async (request, response) => {
             .end();
     }
 
-    const user = await User.findById(userID).populate("records", {
-        record: 1,
-        date: 1,
+    const user = await User.findById(userID).populate("records");
+
+    const decryptedRecords = user.records.map((record) => {
+        const decryptedRecord = decrypt(record.encryptedRecord);
+        return {
+            record: decryptedRecord,
+            date: record.date,
+        };
     });
 
-    response.status(200).json(user.records).end();
+    response.status(200).json(decryptedRecords).end();
 });
 
 recordRouter.post("/:id", async (request, response) => {
@@ -39,10 +63,22 @@ recordRouter.post("/:id", async (request, response) => {
             .end();
     }
 
+    function encrypt(text) {
+        const cipher = crypto.createCipheriv(algorithm, Buffer.from(key), iv);
+        let encrypted = cipher.update(text);
+        encrypted = Buffer.concat([encrypted, cipher.final()]);
+        return {
+            iv: iv.toString("hex"),
+            encryptedData: encrypted.toString("hex"),
+        };
+    }
+
+    const encryptedRecord = encrypt(request.body.record);
+
     const user = await User.findById(userID);
 
     const updatedRecord = new Record({
-        record: request.body.record,
+        encryptedRecord,
         user: userID,
         date: new Date(),
     });
