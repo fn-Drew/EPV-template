@@ -2,8 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import loginService from "./services/login";
 import recordService from "./services/records";
 import userService from "./services/users";
-import LoginForm from "./components/LoginForm";
-import AccountForm from "./components/AccountForm";
+import AuthForm from "./components/AuthForm";
 import LogoutButton from "./components/LogoutButton";
 import RecordsDisplay from "./components/RecordsDisplay";
 import "./App.css";
@@ -12,7 +11,7 @@ function App() {
     const [user, setUser] = useState(null);
     const [records, setRecords] = useState("");
     const [credentials, setCredentials] = useState({ username: "", password: "" });
-    const [toggleForm, setToggleForm] = useState({ accountForm: false, loginForm: true });
+    const [toggleForm, setToggleForm] = useState({ accountForm: false, loginForm: false });
 
     async function getRecords(id) {
         try {
@@ -83,22 +82,8 @@ function App() {
 
     return (
         <div className="app">
-            {toggleForm.loginForm ? (
-                <LoginForm
-                    handleLogin={handleLogin}
-                    credentials={credentials}
-                    setCredentials={setCredentials}
-                    setToggleForm={setToggleForm}
-                />
-            ) : null}
-            {toggleForm.accountForm ? (
-                <AccountForm
-                    handleAccountCreation={handleAccountCreation}
-                    credentials={credentials}
-                    setCredentials={setCredentials}
-                    setToggleForm={setToggleForm}
-                />
-            ) : null}
+
+            <AuthForm handleLogin={handleLogin} toggleForm={toggleForm} setToggleForm={setToggleForm} credentials={credentials} setCredentials={setCredentials} handleAccountCreation={handleAccountCreation} />
 
             {records ? (
                 <div className="records-container">
