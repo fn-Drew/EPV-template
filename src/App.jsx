@@ -4,19 +4,13 @@ import recordService from "./services/records";
 import userService from "./services/users";
 import LoginForm from "./components/LoginForm";
 import AccountForm from "./components/AccountForm";
+import LogoutButton from "./components/LogoutButton";
+import RecordsDisplay from "./components/RecordsDisplay";
 import "./App.css";
-
-function LogoutButton({ handleLogout }) {
-    return (
-        <button className="button" type="button" onClick={handleLogout}>
-            logout
-        </button>
-    );
-}
 
 function App() {
     const [user, setUser] = useState(null);
-    const [records, setRecords] = useState(null);
+    const [records, setRecords] = useState("");
     const [credentials, setCredentials] = useState({ username: "", password: "" });
     const [toggleForm, setToggleForm] = useState({ accountForm: false, loginForm: true });
 
@@ -42,15 +36,6 @@ function App() {
             setToggleForm({ accountForm: false, loginForm: true });
         }
     }, []);
-
-    function Records() {
-        return records.map((record) => (
-            <div className="record" key={record.id}>
-                <div id="transcript">{record.record}</div>
-                <div id="date">{record.date}</div>
-            </div>
-        ));
-    }
 
     const handleAccountCreation = useCallback(
         async (event) => {
@@ -117,7 +102,7 @@ function App() {
 
             {records ? (
                 <div className="records-container">
-                    <Records />
+                    <RecordsDisplay records={records} />
                 </div>
             ) : null}
 
