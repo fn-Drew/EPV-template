@@ -5,8 +5,7 @@ function LoginForm({
     handleLogin,
     credentials,
     setCredentials,
-    setShowLoginForm,
-    setShowAccountForm,
+    setToggleForm,
 }) {
     return (
         <>
@@ -39,8 +38,7 @@ function LoginForm({
                     className="button"
                     type="button"
                     onClick={() => {
-                        setShowLoginForm(false);
-                        setShowAccountForm(true);
+                        setToggleForm({ loginForm: false, accountForm: true });
                     }}
                 >
                     Dont have an account?

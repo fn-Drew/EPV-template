@@ -17,12 +17,10 @@ function LogoutButton({ handleLogout }) {
 }
 
 function App() {
-    const [user, setUser] = useState("");
-    const [records, setRecords] = useState("");
+    const [user, setUser] = useState(null);
+    const [records, setRecords] = useState(null);
     const [credentials, setCredentials] = useState({ username: "", password: "" });
-
-    const [showAccountForm, setShowAccountForm] = useState(false);
-    const [showLoginForm, setShowLoginForm] = useState(false);
+    const [toggleForm, setToggleForm] = useState({ accountForm: false, loginForm: true });
 
     async function getRecords(id) {
         try {
@@ -39,13 +37,11 @@ function App() {
         if (loggedUserJSON) {
             const currentUser = JSON.parse(loggedUserJSON);
             setUser(currentUser);
-            setShowAccountForm(false);
-            setShowLoginForm(false);
+            setToggleForm({ accountForm: false, loginForm: false });
             getRecords(currentUser.id);
             recordService.setToken(currentUser.token);
         } else {
-            setShowAccountForm(false);
-            setShowLoginForm(true);
+            setToggleForm({ accountForm: false, loginForm: true });
         }
     }, []);
 
@@ -87,8 +83,7 @@ function App() {
                 getRecords(loggedUser.id);
                 setUser(loggedUser);
                 setCredentials({ username: "", password: "" });
-                setShowAccountForm(false);
-                setShowLoginForm(false);
+                setToggleForm({ accountForm: false, loginForm: false });
             } catch (err) {
                 console.error(err.response.data.error);
             }
@@ -100,28 +95,25 @@ function App() {
         window.localStorage.removeItem("recUserCreds");
         setUser(null);
         setRecords(null);
-        setShowLoginForm(true);
-        setShowAccountForm(false);
+        setToggleForm({ accountForm: false, loginForm: true });
     }, []);
 
     return (
         <div className="app">
-            {showLoginForm ? (
+            {toggleForm.loginForm ? (
                 <LoginForm
                     handleLogin={handleLogin}
                     credentials={credentials}
                     setCredentials={setCredentials}
-                    setShowLoginForm={setShowLoginForm}
-                    setShowAccountForm={setShowAccountForm}
+                    setToggleForm={setToggleForm}
                 />
             ) : null}
-            {showAccountForm ? (
+            {toggleForm.accountForm ? (
                 <AccountForm
                     handleAccountCreation={handleAccountCreation}
                     credentials={credentials}
                     setCredentials={setCredentials}
-                    setShowLoginForm={setShowLoginForm}
-                    setShowAccountForm={setShowAccountForm}
+                    setToggleForm={setToggleForm}
                 />
             ) : null}
 

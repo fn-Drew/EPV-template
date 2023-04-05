@@ -4,8 +4,7 @@ function CreateAccountForm({
     handleAccountCreation,
     credentials,
     setCredentials,
-    setShowLoginForm,
-    setShowAccountForm,
+    setToggleForm,
 }) {
     return (
         <>
@@ -38,8 +37,7 @@ function CreateAccountForm({
                     className="button"
                     type="button"
                     onClick={() => {
-                        setShowLoginForm(true);
-                        setShowAccountForm(false);
+                        setToggleForm({ loginForm: true, accountForm: false });
                     }}
                 >
                     Already have an account?
