@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-/* eslint-disable react/prop-types */
 import React, { useCallback, useEffect, useState } from "react";
 import loginService from "./services/login";
 import recordService from "./services/records";

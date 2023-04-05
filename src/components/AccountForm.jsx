@@ -1,6 +1,6 @@
 import React from 'react';
 
-function CreateAccountForm({
+function AccountForm({
     handleAccountCreation,
     credentials,
     setCredentials,
@@ -47,4 +47,4 @@ function CreateAccountForm({
     );
 }
 
-export default CreateAccountForm;
+export default AccountForm;
