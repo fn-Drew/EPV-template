@@ -4,6 +4,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import loginService from "./services/login";
 import recordService from "./services/records";
 import userService from "./services/users";
+import LoginForm from "./components/LoginForm";
+import AccountForm from "./components/AccountForm";
 import "./App.css";
 
 function LogoutButton({ handleLogout }) {
@@ -11,108 +13,6 @@ function LogoutButton({ handleLogout }) {
         <button className="button" type="button" onClick={handleLogout}>
             logout
         </button>
-    );
-}
-
-function LoginForm({
-    handleLogin,
-    username,
-    password,
-    setUsername,
-    setPassword,
-    setShowLoginForm,
-    setShowAccountForm,
-}) {
-    return (
-        <>
-            <h1>Login</h1>
-            <form className="form" onSubmit={handleLogin}>
-                <div>
-                    username
-                    <input
-                        className="input"
-                        type="text"
-                        value={username}
-                        name="Username"
-                        onChange={({ target }) => setUsername(target.value)}
-                    />
-                </div>
-                <div>
-                    password
-                    <input
-                        className="input"
-                        type="password"
-                        value={password}
-                        name="Password"
-                        onChange={({ target }) => setPassword(target.value)}
-                    />
-                </div>
-                <button className="button" type="submit">
-                    login
-                </button>
-                <button
-                    className="button"
-                    type="button"
-                    onClick={() => {
-                        setShowLoginForm(false);
-                        setShowAccountForm(true);
-                    }}
-                >
-                    Dont have an account?
-                </button>
-            </form>
-        </>
-    );
-}
-
-function CreateAccountForm({
-    handleAccountCreation,
-    username,
-    password,
-    setUsername,
-    setPassword,
-    setShowLoginForm,
-    setShowAccountForm,
-}) {
-    return (
-        <>
-            <h1>Create Account</h1>
-            <form className="form" onSubmit={handleAccountCreation}>
-                <div>
-                    username
-                    <input
-                        className="input"
-                        type="text"
-                        value={username}
-                        name="Username"
-                        onChange={({ target }) => setUsername(target.value)}
-                    />
-                </div>
-                <div>
-                    password
-                    <input
-                        className="input"
-                        type="password"
-                        value={password}
-                        name="Password"
-                        onChange={({ target }) => setPassword(target.value)}
-                    />
-                </div>
-                <button className="button" type="submit">
-                    Create Account
-                </button>
-                <button
-                    className="button"
-                    type="button"
-                    onClick={() => {
-                        setShowLoginForm(true);
-                        setShowAccountForm(false);
-                    }}
-                >
-                    Already have an account?
-                </button>
-            </form>
-        </>
     );
 }
 
@@ -222,7 +122,7 @@ function App() {
                 />
             ) : null}
             {showAccountForm ? (
-                <CreateAccountForm
+                <AccountForm
                     handleAccountCreation={handleAccountCreation}
                     username={username}
                     password={password}
