@@ -18,9 +18,8 @@ function LogoutButton({ handleLogout }) {
 
 function App() {
     const [user, setUser] = useState("");
-    const [username, setUsername] = useState("");
     const [records, setRecords] = useState("");
-    const [password, setPassword] = useState("");
+    const [credentials, setCredentials] = useState({ username: "", password: "" });
 
     const [showAccountForm, setShowAccountForm] = useState(false);
     const [showLoginForm, setShowLoginForm] = useState(false);
@@ -64,14 +63,13 @@ function App() {
             event.preventDefault();
             try {
                 await userService.create({
-                    username,
-                    password,
+                    ...credentials
                 });
             } catch (err) {
                 console.error(err);
             }
         },
-        [username, password]
+        [credentials]
     );
 
     const handleLogin = useCallback(
@@ -79,8 +77,7 @@ function App() {
             event.preventDefault();
             try {
                 const loggedUser = await loginService.login({
-                    username,
-                    password,
+                    ...credentials
                 });
                 window.localStorage.setItem(
                     "recUserCreds",
@@ -89,15 +86,14 @@ function App() {
                 // recordService.setToken(user.token);
                 getRecords(loggedUser.id);
                 setUser(loggedUser);
-                setUsername("");
-                setPassword("");
+                setCredentials({ username: "", password: "" });
                 setShowAccountForm(false);
                 setShowLoginForm(false);
             } catch (err) {
                 console.error(err.response.data.error);
             }
         },
-        [username, password]
+        [credentials]
     );
 
     const handleLogout = useCallback(() => {
@@ -113,10 +109,8 @@ function App() {
             {showLoginForm ? (
                 <LoginForm
                     handleLogin={handleLogin}
-                    username={username}
-                    password={password}
-                    setUsername={setUsername}
-                    setPassword={setPassword}
+                    credentials={credentials}
+                    setCredentials={setCredentials}
                     setShowLoginForm={setShowLoginForm}
                     setShowAccountForm={setShowAccountForm}
                 />
@@ -124,10 +118,8 @@ function App() {
             {showAccountForm ? (
                 <AccountForm
                     handleAccountCreation={handleAccountCreation}
-                    username={username}
-                    password={password}
-                    setUsername={setUsername}
-                    setPassword={setPassword}
+                    credentials={credentials}
+                    setCredentials={setCredentials}
                     setShowLoginForm={setShowLoginForm}
                     setShowAccountForm={setShowAccountForm}
                 />

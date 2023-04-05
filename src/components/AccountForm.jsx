@@ -2,10 +2,8 @@ import React from 'react';
 
 function CreateAccountForm({
     handleAccountCreation,
-    username,
-    password,
-    setUsername,
-    setPassword,
+    credentials,
+    setCredentials,
     setShowLoginForm,
     setShowAccountForm,
 }) {
@@ -18,9 +16,9 @@ function CreateAccountForm({
                     <input
                         className="input"
                         type="text"
-                        value={username}
+                        value={credentials.username}
                         name="Username"
-                        onChange={({ target }) => setUsername(target.value)}
+                        onChange={({ target }) => setCredentials({ ...credentials, username: target.value })}
                     />
                 </div>
                 <div>
@@ -28,9 +26,9 @@ function CreateAccountForm({
                     <input
                         className="input"
                         type="password"
-                        value={password}
+                        value={credentials.password}
                         name="Password"
-                        onChange={({ target }) => setPassword(target.value)}
+                        onChange={({ target }) => setCredentials({ ...credentials, password: target.value })}
                     />
                 </div>
                 <button className="button" type="submit">
