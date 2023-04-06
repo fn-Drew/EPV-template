@@ -21,13 +21,8 @@ function App() {
     return (
         <div className="app">
             <AuthForm handleLogin={handleLogin} toggleForm={toggleForm} setToggleForm={setToggleForm} credentials={credentials} setCredentials={setCredentials} handleAccountCreation={handleAccountCreation} />
-            {records ? (
-                <div className="records-container">
-                    <RecordsDisplay records={records} />
-                </div>
-            ) : null}
-
-            {user ? <LogoutButton handleLogout={handleLogout} /> : null}
+            <RecordsDisplay records={records} user={user} />
+            <LogoutButton handleLogout={handleLogout} user={user} />
         </div>
     );
 }
