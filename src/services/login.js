@@ -11,9 +11,4 @@ const login = async (credentials) => {
     return response.data;
 };
 
-const createAccount = async (credentials) => {
-    const response = await axios.post(baseUrl, credentials);
-    return response.data;
-};
-
-export default { login, createAccount };
+export default { login };

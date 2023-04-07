@@ -21,10 +21,10 @@ export default function useAuth({ setToggleForm, setRecords }) {
         const loggedUserJSON = window.localStorage.getItem("recUserCreds");
         if (loggedUserJSON) {
             const currentUser = JSON.parse(loggedUserJSON);
+            recordService.setToken(currentUser.token);
             setUser(currentUser);
             setToggleForm({ accountForm: false, loginForm: false });
             getRecords(currentUser.id);
-            recordService.setToken(currentUser.token);
         } else {
             setToggleForm({ accountForm: false, loginForm: true });
         }
@@ -49,11 +49,11 @@ export default function useAuth({ setToggleForm, setRecords }) {
                 "recUserCreds",
                 JSON.stringify(loggedUser)
             );
-            // recordService.setToken(user.token);
-            getRecords(loggedUser.id);
+            recordService.setToken(loggedUser.token);
             setUser(loggedUser);
             setCredentials({ username: "", password: "" });
             setToggleForm({ accountForm: false, loginForm: false });
+            getRecords(loggedUser.id);
         } catch (err) {
             console.error(err.response);
         }

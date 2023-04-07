@@ -10,38 +10,20 @@ const setToken = (newToken) => {
 
 // TODO: make records return id from server to remove unique key error
 const getAllUserRecords = async (user) => {
-    const request = axios.get(`${baseUrl}${user}`);
+    const config = {
+        headers: { Authorization: token },
+    }
+    const request = axios.get(`${baseUrl}${user}`, config);
     const response = await request.then((records) => records.data);
     return response;
 };
 
 const create = async (newRecord, user) => {
-    const response = await axios
-        .post(`${baseUrl}${user.id}`, newRecord)
-        .catch((e) => console.error(e));
-
-    return response.data;
-};
-
-const remove = async (record) => {
     const config = {
         headers: { Authorization: token },
-    };
-
+    }
     const response = await axios
-        .delete(`${baseUrl}${record.id}`, config)
-        .catch((e) => console.error(e));
-
-    return response.data;
-};
-
-const put = async (newRecord) => {
-    const config = {
-        headers: { Authorization: token },
-    };
-
-    const response = await axios
-        .put(`${baseUrl}${newRecord.id}`, newRecord, config)
+        .post(`${baseUrl}${user.id}`, newRecord, config)
         .catch((e) => console.error(e));
 
     return response.data;
@@ -51,6 +33,4 @@ export default {
     getAllUserRecords,
     setToken,
     create,
-    put,
-    remove,
 };

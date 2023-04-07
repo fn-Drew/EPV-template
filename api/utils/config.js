@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const { PORT, CRYPTO_KEY, CRYPTO_IV } = process.env;
+const { PORT, CRYPTO_KEY, CRYPTO_IV, SECRET } = process.env;
 const MONGODB_URI =
     process.env.NODE_ENV === "test"
         ? process.env.TEST_MONGODB_URI
@@ -11,4 +11,5 @@ module.exports = {
     PORT,
     CRYPTO_KEY,
     CRYPTO_IV,
+    SECRET,
 };

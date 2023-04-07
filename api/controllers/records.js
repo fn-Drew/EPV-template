@@ -1,9 +1,12 @@
+const jwt = require('jsonwebtoken')
 const recordRouter = require("express").Router();
 const crypto = require("node:crypto");
 const config = require("../utils/config");
 const Record = require("../models/record");
 const User = require("../models/user");
+const { tokenExtractor } = require("../utils/middleware");
 
+const SECRET = process.env.SECRET
 const algorithm = "aes-256-cbc";
 const key = config.CRYPTO_KEY;
 const iv = crypto.randomBytes(16);
@@ -26,8 +29,14 @@ recordRouter.get("/", async (request, response) => {
     response.status(200).json(records).end();
 });
 
+// get unencrypted records
 recordRouter.get("/:id", async (request, response) => {
-    const userID = request.params.id;
+
+    const decodedToken = jwt.verify(tokenExtractor(request), SECRET)
+    const userID = decodedToken.id;
+    if (!userID) {
+        return response.status(401).json({ error: 'token invalid' })
+    }
 
     if (!userID) {
         response
@@ -52,7 +61,12 @@ recordRouter.get("/:id", async (request, response) => {
 });
 
 recordRouter.post("/:id", async (request, response) => {
-    const userID = request.params.id;
+
+    const decodedToken = jwt.verify(tokenExtractor(request), SECRET)
+    const userID = decodedToken.id;
+    if (!userID) {
+        return response.status(401).json({ error: 'token invalid' })
+    }
 
     if (!userID) {
         response
@@ -75,9 +89,7 @@ recordRouter.post("/:id", async (request, response) => {
 
     const encryptedRecord = encrypt(request.body.record);
 
-    console.log('HERE');
     const user = await User.findById(userID);
-    console.log(user);
 
     const updatedRecord = new Record({
         encryptedRecord,
