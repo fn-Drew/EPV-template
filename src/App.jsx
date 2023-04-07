@@ -3,30 +3,27 @@ import AuthForm from "./components/AuthForm";
 import LogoutButton from "./components/LogoutButton";
 import RecordsDisplay from "./components/RecordsDisplay";
 import useAuth from "./hooks/useAuth";
+import recordService from "./services/records";
 import "./App.css";
 
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = SpeechRecognition ? new SpeechRecognition() : null;
 
-if (recognition) {
-    recognition.interimResults = true;
-}
-
-function Dictation() {
+function Dictation({ user }) {
     const [listening, setListening] = useState(false);
     const [transcript, setTranscript] = useState('');
 
     useEffect(() => {
         if (listening) {
-            const logAndClearInterval = setInterval(() => {
-                console.log(transcript);
+            const logAndClearInterval = setInterval(async () => {
+                await recordService.create({ record: transcript }, user);
                 setTranscript('');
             }, 5000);
             return () => {
                 clearInterval(logAndClearInterval);
             };
         }
-    }, [listening, transcript]);
+    }, [listening, transcript, user]);
 
     if (!recognition) {
         return <p>your browser does not support speech recognition</p>
@@ -88,7 +85,7 @@ function App() {
                 setCredentials={setCredentials}
                 handleAccountCreation={handleAccountCreation}
             />
-            <Dictation />
+            <Dictation user={user} />
             <RecordsDisplay records={records} user={user} />
             <LogoutButton handleLogout={handleLogout} user={user} />
         </div>

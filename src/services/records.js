@@ -15,16 +15,10 @@ const getAllUserRecords = async (user) => {
     return response;
 };
 
-const create = async (newRecord, user, controller) => {
-    // const config = {
-    //     headers: { Authorization: token },
-    // };
-
+const create = async (newRecord, user) => {
     const response = await axios
-        .post(`${baseUrl}${user.id}`, newRecord, { signal: controller.signal })
+        .post(`${baseUrl}${user.id}`, newRecord)
         .catch((e) => console.error(e));
-
-    console.log(response);
 
     return response.data;
 };
