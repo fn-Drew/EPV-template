@@ -15,13 +15,16 @@ const getAllUserRecords = async (user) => {
     return response;
 };
 
-const create = async (newObject) => {
-    const config = {
-        headers: { Authorization: token },
-    };
+const create = async (newRecord, user, controller) => {
+    // const config = {
+    //     headers: { Authorization: token },
+    // };
+
     const response = await axios
-        .post(baseUrl, newObject, config)
-        .catch((e) => console.log(e));
+        .post(`${baseUrl}${user.id}`, newRecord, { signal: controller.signal })
+        .catch((e) => console.error(e));
+
+    console.log(response);
 
     return response.data;
 };
@@ -33,19 +36,19 @@ const remove = async (record) => {
 
     const response = await axios
         .delete(`${baseUrl}${record.id}`, config)
-        .catch((e) => console.log(e));
+        .catch((e) => console.error(e));
 
     return response.data;
 };
 
-const put = async (newObject) => {
+const put = async (newRecord) => {
     const config = {
         headers: { Authorization: token },
     };
 
     const response = await axios
-        .put(`${baseUrl}${newObject.id}`, newObject, config)
-        .catch((e) => console.log(e));
+        .put(`${baseUrl}${newRecord.id}`, newRecord, config)
+        .catch((e) => console.error(e));
 
     return response.data;
 };

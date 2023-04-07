@@ -75,7 +75,9 @@ recordRouter.post("/:id", async (request, response) => {
 
     const encryptedRecord = encrypt(request.body.record);
 
+    console.log('HERE');
     const user = await User.findById(userID);
+    console.log(user);
 
     const updatedRecord = new Record({
         encryptedRecord,
