@@ -13,6 +13,7 @@ export default function Dictation({ user }) {
     useEffect(() => {
         if (listening) {
             const logAndClearInterval = setInterval(async () => {
+                if (transcript === '') return;
                 await recordService.create({ record: transcript }, user);
                 setTranscript('');
             }, 5000);
