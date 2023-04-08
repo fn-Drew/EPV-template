@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthForm from "./components/AuthForm";
 import LogoutButton from "./components/LogoutButton";
 import RecordsDisplay from "./components/RecordsDisplay";
 import useAuth from "./hooks/useAuth";
 import Dictation from "./components/Dictation";
+import DisplayWhenLoggedIn from "./components/DisplayWhenLoggedIn";
 import "./App.css";
 
 function App() {
@@ -29,9 +30,11 @@ function App() {
                 setCredentials={setCredentials}
                 handleAccountCreation={handleAccountCreation}
             />
-            <Dictation user={user} />
-            <RecordsDisplay records={records} user={user} />
-            <LogoutButton handleLogout={handleLogout} user={user} />
+            <DisplayWhenLoggedIn user={user}>
+                <Dictation user={user} />
+                <RecordsDisplay records={records} user={user} />
+                <LogoutButton handleLogout={handleLogout} />
+            </DisplayWhenLoggedIn>
         </div>
     );
 }

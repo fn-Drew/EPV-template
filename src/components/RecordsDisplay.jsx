@@ -1,9 +1,9 @@
 import React from 'react';
 import "../App.css";
 
-export default function RecordsDisplay({ records, user }) {
+export default function RecordsDisplay({ records }) {
 
-    if (user && !records) {
+    if (!records) {
         return (
             <div className="records-container">
                 <div className="record">
