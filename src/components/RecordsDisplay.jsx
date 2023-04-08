@@ -17,7 +17,7 @@ export default function RecordsDisplay({ records, user }) {
         <div className="records-container">
             {
                 records.map((record) => (
-                    <div className="record" key={record.id}>
+                    <div className="record" key={record.date}>
                         <div id="transcript">{record.record}</div>
                         <div id="date">{record.date}</div>
                     </div>

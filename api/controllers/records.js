@@ -6,23 +6,10 @@ const Record = require("../models/record");
 const User = require("../models/user");
 const { tokenExtractor } = require("../utils/middleware");
 
-const SECRET = process.env.SECRET
+const { SECRET } = process.env
 const algorithm = "aes-256-cbc";
 const key = config.CRYPTO_KEY;
 const iv = crypto.randomBytes(16);
-
-function decrypt(text) {
-    const decIV = Buffer.from(text.iv, "hex");
-    const encryptedText = Buffer.from(text.encryptedData, "hex");
-    const decipher = crypto.createDecipheriv(
-        algorithm,
-        Buffer.from(key),
-        decIV
-    );
-    let decrypted = decipher.update(encryptedText);
-    decrypted = Buffer.concat([decrypted, decipher.final()]);
-    return decrypted.toString();
-}
 
 recordRouter.get("/", async (request, response) => {
     const records = await Record.find({});
@@ -48,6 +35,19 @@ recordRouter.get("/:id", async (request, response) => {
     }
 
     const user = await User.findById(userID).populate("records");
+
+    function decrypt(text) {
+        const decIV = Buffer.from(text.iv, "hex");
+        const encryptedText = Buffer.from(text.encryptedData, "hex");
+        const decipher = crypto.createDecipheriv(
+            algorithm,
+            Buffer.from(key),
+            decIV
+        );
+        let decrypted = decipher.update(encryptedText);
+        decrypted = Buffer.concat([decrypted, decipher.final()]);
+        return decrypted.toString();
+    }
 
     const decryptedRecords = user.records.map((record) => {
         const decryptedRecord = decrypt(record.encryptedRecord);

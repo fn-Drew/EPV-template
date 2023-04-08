@@ -8,7 +8,6 @@ const setToken = (newToken) => {
     token = `Bearer ${newToken}`;
 };
 
-// TODO: make records return id from server to remove unique key error
 const getAllUserRecords = async (user) => {
     const config = {
         headers: { Authorization: token },
