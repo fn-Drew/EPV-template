@@ -13,13 +13,23 @@ export default function RecordsDisplay({ records }) {
         );
     }
 
+    const formatDate = (date) => {
+        const options = {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true,
+        };
+
+        return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
+    }
+
     return records ?
         <div className="records-container">
             {
                 records.map((record) => (
                     <div className="record" key={record.date}>
                         <div id="transcript">{record.record}</div>
-                        <div id="date">{record.date}</div>
+                        <div id="date">{formatDate(record.date)}</div>
                     </div>
                 ))
             }

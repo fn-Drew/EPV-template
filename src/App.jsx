@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AuthForm from "./components/AuthForm";
 import LogoutButton from "./components/LogoutButton";
 import RecordsDisplay from "./components/RecordsDisplay";
