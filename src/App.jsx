@@ -3,6 +3,7 @@ import AuthForm from "./components/AuthForm";
 import LogoutButton from "./components/LogoutButton";
 import RecordsDisplay from "./components/RecordsDisplay";
 import useAuth from "./hooks/useAuth";
+import useUserRecords from "./hooks/useUserRecords";
 import Dictation from "./components/Dictation";
 import DisplayWhenLoggedIn from "./components/DisplayWhenLoggedIn";
 import "./App.css";
@@ -20,8 +21,15 @@ function App() {
         handleLogout,
     } = useAuth({ setToggleForm, setRecords });
 
+    const { error, isError } = useUserRecords(user?.id, user?.token);
 
-    // const result = useQuery(['records'], recordService.getAllUserRecords)
+    // logout user if token expired
+    if (isError) {
+        if (error.response.data.error) {
+            handleLogout();
+            console.log('token expired, login again');
+        }
+    }
 
     return (
         <div className="app">
