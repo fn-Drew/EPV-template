@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 import loginService from '../services/login';
 import userService from '../services/users';
 import recordService from '../services/records';
-import useRecords from './useRecords';
+import useUserRecords from './useUserRecords';
 
 export default function useAuth({ setToggleForm, setRecords }) {
     const [user, setUser] = useState(null);
     const [credentials, setCredentials] = useState({ username: '', password: '' });
 
-    const { data: userRecords, refetch: refetchRecords } = useRecords(user?.id, user?.token);
+    const { data: userRecords, refetch: refetchRecords } = useUserRecords(user?.id, user?.token);
 
     // Function to restore user session
     const restoreUserSession = () => {

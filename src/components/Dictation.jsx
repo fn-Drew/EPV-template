@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import recordService from "../services/records";
+import useCreateRecord from '../hooks/useCreateRecords';
 
 // Initialize SpeechRecognition, if it's available in the browser
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -9,12 +9,14 @@ export default function Dictation({ user }) {
     const [listening, setListening] = useState(false);
     const [transcript, setTranscript] = useState('');
 
+    const createRecordMutation = useCreateRecord();
+
     // Set up an interval to send the transcript to the server every 5 seconds
     useEffect(() => {
         if (listening) {
             const logAndClearInterval = setInterval(async () => {
                 if (transcript === '') return;
-                await recordService.create({ record: transcript }, user);
+                createRecordMutation.mutate({ newRecord: { record: transcript }, user });
                 setTranscript('');
             }, 5000);
             return () => {
