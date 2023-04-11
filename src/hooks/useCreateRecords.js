@@ -8,5 +8,4 @@ const useCreateRecord = () =>
         recordsService.create(data.newRecord, data.user)
     });
 
-
 export default useCreateRecord;

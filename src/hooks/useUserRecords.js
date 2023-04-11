@@ -5,7 +5,6 @@ const useRecords = (user, token) =>
     useQuery(
         ["records", user],
         () => recordsService.getAllUserRecords(user), {
-        retry: false,
         refetchOnWindowFocus: false,
         enabled: !!user && !!token
     });

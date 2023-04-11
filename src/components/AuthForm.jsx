@@ -2,8 +2,15 @@ import React from 'react'
 import LoginForm from './LoginForm'
 import AccountForm from './AccountForm'
 
-export default function AuthForm({ handleLogin, handleAccountCreation, credentials, setCredentials, toggleForm, setToggleForm }) {
-
+export default function AuthForm(
+    {
+        handleLogin,
+        handleAccountCreation,
+        credentials,
+        setCredentials,
+        toggleForm,
+        setToggleForm
+    }) {
     return (
         <>
             {

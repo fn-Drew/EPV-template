@@ -1,15 +1,16 @@
 /* eslint-disable no-console */
 import { useState, useEffect } from 'react';
 import loginService from '../services/login';
-import userService from '../services/users';
 import recordService from '../services/records';
 import useUserRecords from './useUserRecords';
+import useCreateUser from './useCreateUser';
 
 export default function useAuth({ setToggleForm, setRecords }) {
     const [user, setUser] = useState(null);
     const [credentials, setCredentials] = useState({ username: '', password: '' });
 
     const { data: userRecords, refetch: refetchRecords } = useUserRecords(user?.id, user?.token);
+    const createUserMutation = useCreateUser();
 
     // Function to restore user session
     const restoreUserSession = () => {
@@ -29,19 +30,16 @@ export default function useAuth({ setToggleForm, setRecords }) {
         restoreUserSession();
     }, []);
 
+    // if user records change, update records state
     useEffect(() => {
         if (userRecords) {
             setRecords(userRecords);
         }
-    }, [userRecords]);
+    }, [userRecords, setRecords]);
 
     const handleAccountCreation = async (event) => {
         event.preventDefault();
-        try {
-            await userService.create(credentials);
-        } catch (err) {
-            console.error(err);
-        }
+        createUserMutation.mutate(credentials);
     }
 
     const handleLogin = async (event) => {
@@ -66,8 +64,7 @@ export default function useAuth({ setToggleForm, setRecords }) {
 
     const handleLogout = () => {
         window.localStorage.removeItem("recUserCreds");
-        setUser(null);
-        setRecords(null);
+        setUser(null)
         setToggleForm({ accountForm: false, loginForm: true });
     };
 
