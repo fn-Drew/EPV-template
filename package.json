@@ -10,6 +10,7 @@
         "dev": "NODE_ENV=development nodemon ./api/index.js"
     },
     "dependencies": {
+        "@tanstack/react-query": "^4.29.1",
         "@vitejs/plugin-react-swc": "^3.0.0",
         "axios": "^1.3.4",
         "bcrypt": "^5.1.0",

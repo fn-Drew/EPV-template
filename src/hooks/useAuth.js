@@ -1,34 +1,39 @@
+/* eslint-disable no-console */
 import { useState, useEffect } from 'react';
 import loginService from '../services/login';
 import userService from '../services/users';
 import recordService from '../services/records';
+import useRecords from './useRecords';
 
 export default function useAuth({ setToggleForm, setRecords }) {
     const [user, setUser] = useState(null);
     const [credentials, setCredentials] = useState({ username: '', password: '' });
 
-    async function getRecords(id) {
-        try {
-            const userRecords = await recordService.getAllUserRecords(id);
-            setRecords(userRecords);
-        } catch (err) {
-            console.error(err.code);
-        }
-    }
+    const { data: userRecords, refetch: refetchRecords } = useRecords(user?.id, user?.token);
 
-    // on page load check if user has logged in before
-    useEffect(() => {
+    // Function to restore user session
+    const restoreUserSession = () => {
         const loggedUserJSON = window.localStorage.getItem("recUserCreds");
         if (loggedUserJSON) {
             const currentUser = JSON.parse(loggedUserJSON);
             recordService.setToken(currentUser.token);
             setUser(currentUser);
             setToggleForm({ accountForm: false, loginForm: false });
-            getRecords(currentUser.id);
         } else {
             setToggleForm({ accountForm: false, loginForm: true });
         }
+    };
+
+    // on page load check if user has logged in before
+    useEffect(() => {
+        restoreUserSession();
     }, []);
+
+    useEffect(() => {
+        if (userRecords) {
+            setRecords(userRecords);
+        }
+    }, [userRecords]);
 
     const handleAccountCreation = async (event) => {
         event.preventDefault();
@@ -53,7 +58,7 @@ export default function useAuth({ setToggleForm, setRecords }) {
             setUser(loggedUser);
             setCredentials({ username: "", password: "" });
             setToggleForm({ accountForm: false, loginForm: false });
-            getRecords(loggedUser.id);
+            refetchRecords();
         } catch (err) {
             console.error(err.response);
         }

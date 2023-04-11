@@ -20,6 +20,9 @@ function App() {
         handleLogout,
     } = useAuth({ setToggleForm, setRecords });
 
+
+    // const result = useQuery(['records'], recordService.getAllUserRecords)
+
     return (
         <div className="app">
             <AuthForm
