@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import useCreateRecord from '../hooks/useCreateRecords';
 
 // Initialize SpeechRecognition, if it's available in the browser
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = SpeechRecognition ? new SpeechRecognition() : null;
 
-export default function Dictation({ user }) {
+export default function Dictation() {
     const [listening, setListening] = useState(false);
     const [transcript, setTranscript] = useState('');
 
+    const user = useSelector(state => state.user);
     const createRecordMutation = useCreateRecord();
 
     // Set up an interval to send the transcript to the server every 5 seconds
