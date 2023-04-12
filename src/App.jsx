@@ -14,13 +14,14 @@ function App() {
     const records = useSelector(state => state.records);
     const user = useSelector(state => state.user);
 
+    const { error, isError } = useUserRecords(user?.id, user?.token);
+
     const {
         handleAccountCreation,
         handleLogin,
         handleLogout,
     } = useAuth({ setToggleForm });
 
-    const { error, isError } = useUserRecords(user?.id, user?.token);
 
     // logout user if token expired
     if (isError) {

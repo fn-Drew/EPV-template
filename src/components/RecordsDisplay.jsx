@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import "../App.css";
 
@@ -40,12 +40,10 @@ export default function RecordsDisplay({ records }) {
         const groupedRecords = records.reduce((acc, record) => {
             // Format the date to only show the year, month, and day
             const day = formatDay(record.date);
-
             // If the day is not already in the accumulator object, create an empty array for it
             if (!acc[day]) {
                 acc[day] = [];
             }
-
             // Add the record to the array for its corresponding day
             acc[day].push(record);
 
@@ -59,6 +57,11 @@ export default function RecordsDisplay({ records }) {
     const groupedRecords = groupByDate(records);
     // Convert the groupedRecords object into an array of key-value pairs (day and records)
     const days = Object.entries(groupedRecords);
+
+    // on load make current day the most recent day with records
+    useEffect(() => {
+        setCurrentDayIndex(days.length - 1);
+    }, [days.length])
 
     // Functions to navigate between days
     const prevDay = () => {
