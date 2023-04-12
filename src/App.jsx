@@ -12,11 +12,9 @@ import "./App.css";
 function App() {
     const [toggleForm, setToggleForm] = useState({ accountForm: false, loginForm: false });
     const records = useSelector(state => state.records);
+    const user = useSelector(state => state.user);
 
     const {
-        user,
-        credentials,
-        setCredentials,
         handleAccountCreation,
         handleLogin,
         handleLogout,
@@ -38,8 +36,6 @@ function App() {
                 handleLogin={handleLogin}
                 toggleForm={toggleForm}
                 setToggleForm={setToggleForm}
-                credentials={credentials}
-                setCredentials={setCredentials}
                 handleAccountCreation={handleAccountCreation}
             />
             <DisplayWhenLoggedIn user={user}>

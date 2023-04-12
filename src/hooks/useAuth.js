@@ -1,19 +1,21 @@
 /* eslint-disable no-console */
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import loginService from '../services/login';
 import recordService from '../services/records';
 import useUserRecords from './useUserRecords';
 import useCreateUser from './useCreateUser';
 import { setRecords } from '../reducers/recordReducer';
+import { setUser } from '../reducers/userReducer';
+import { setCredentials } from '../reducers/credentialsReducer';
 
 export default function useAuth({ setToggleForm }) {
-    const [user, setUser] = useState(null);
-    const [credentials, setCredentials] = useState({ username: '', password: '' });
+
+    const user = useSelector(state => state.user)
+    const credentials = useSelector(state => state.credentials)
 
     const { data: userRecords, refetch: refetchRecords } = useUserRecords(user?.id, user?.token);
     const createUserMutation = useCreateUser();
-
     const dispatch = useDispatch();
 
     // Function to restore user session
@@ -22,7 +24,7 @@ export default function useAuth({ setToggleForm }) {
         if (loggedUserJSON) {
             const currentUser = JSON.parse(loggedUserJSON);
             recordService.setToken(currentUser.token);
-            setUser(currentUser);
+            dispatch(setUser(currentUser));
             setToggleForm({ accountForm: false, loginForm: false });
         } else {
             setToggleForm({ accountForm: false, loginForm: true });
@@ -57,8 +59,8 @@ export default function useAuth({ setToggleForm }) {
                 JSON.stringify(loggedUser)
             );
             recordService.setToken(loggedUser.token);
-            setUser(loggedUser);
-            setCredentials({ username: "", password: "" });
+            dispatch(setUser(loggedUser));
+            dispatch(setCredentials({ username: "", password: "" }));
             setToggleForm({ accountForm: false, loginForm: false });
             refetchRecords();
         } catch (err) {
@@ -68,15 +70,11 @@ export default function useAuth({ setToggleForm }) {
 
     const handleLogout = () => {
         window.localStorage.removeItem("recUserCreds");
-        setUser(null)
+        dispatch(setUser(null))
         setToggleForm({ accountForm: false, loginForm: true });
     };
 
     return {
-        user,
-        setUser,
-        credentials,
-        setCredentials,
         handleAccountCreation,
         handleLogin,
         handleLogout

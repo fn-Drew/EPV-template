@@ -24,8 +24,8 @@ export const initialRecords = () =>
 
 export const addRecord = (content, user) =>
     async dispatch => {
-        const newAnecdote = await recordService.create(content, user)
-        dispatch(appendRecord(newAnecdote))
+        const newRecord = await recordService.create(content, user)
+        dispatch(appendRecord(newRecord))
     }
 
 export default recordSlice.reducer
