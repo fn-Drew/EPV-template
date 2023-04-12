@@ -1,11 +1,14 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCredentials } from '../reducers/credentialsReducer';
+
 
 function AccountForm({
     handleAccountCreation,
-    credentials,
-    setCredentials,
     setToggleForm,
 }) {
+    const dispatch = useDispatch();
+    const credentials = useSelector(state => state.credentials);
     return (
         <>
             <h1>Create Account</h1>
@@ -17,7 +20,7 @@ function AccountForm({
                         type="text"
                         value={credentials.username}
                         name="Username"
-                        onChange={({ target }) => setCredentials({ ...credentials, username: target.value })}
+                        onChange={({ target }) => dispatch(setCredentials({ ...credentials, username: target.value }))}
                     />
                 </div>
                 <div>
@@ -27,7 +30,7 @@ function AccountForm({
                         type="password"
                         value={credentials.password}
                         name="Password"
-                        onChange={({ target }) => setCredentials({ ...credentials, password: target.value })}
+                        onChange={({ target }) => dispatch(setCredentials({ ...credentials, password: target.value }))}
                     />
                 </div>
                 <button className="button" type="submit">
