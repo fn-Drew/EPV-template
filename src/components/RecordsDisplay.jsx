@@ -32,6 +32,7 @@ export default function RecordsDisplay() {
     // groupByDate takes an array of records and returns an object
     // where each key is a formatted day (YYYY Month DD) and its value is an array of records for that day
     const groupByDate = (records) => {
+        if (!records) return {};
         const groupedRecords = records.reduce((acc, record) => {
             // Format the date to only show the year, month, and day
             const day = formatDay(record.date);

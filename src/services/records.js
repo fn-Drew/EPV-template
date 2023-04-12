@@ -18,8 +18,6 @@ const getAllUserRecords = async (user) => {
 };
 
 const create = async (newRecord, user) => {
-    console.log("create newRecord", newRecord)
-
     const config = {
         headers: { Authorization: token },
     }

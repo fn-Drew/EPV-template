@@ -12,8 +12,8 @@ export default function useAuth({ setToggleForm }) {
     const createUserMutation = useCreateUser();
     const dispatch = useDispatch();
 
-    // Function to restore user session
-    const restoreUserSession = () => {
+    // on page load check if user has logged in before
+    useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem("recUserCreds");
         if (loggedUserJSON) {
             const currentUser = JSON.parse(loggedUserJSON);
@@ -23,12 +23,7 @@ export default function useAuth({ setToggleForm }) {
         } else {
             setToggleForm({ accountForm: false, loginForm: true });
         }
-    };
-
-    // on page load check if user has logged in before
-    useEffect(() => {
-        restoreUserSession();
-    }, []);
+    }, [dispatch, setToggleForm]);
 
     const handleAccountCreation = async (event) => {
         event.preventDefault();
@@ -52,8 +47,6 @@ export default function useAuth({ setToggleForm }) {
         }
     }
 
-
-    // FIX: when logging out, then switching to another user, the records of the previous user are still displayed until the page is refreshed
     const handleLogout = () => {
         window.localStorage.removeItem("recUserCreds");
         dispatch(setUser(null))
