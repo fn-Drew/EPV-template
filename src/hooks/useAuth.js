@@ -6,6 +6,7 @@ import recordService from '../services/records';
 import useCreateUser from './useCreateUser';
 import { setUser } from '../reducers/userReducer';
 import { setCredentials } from '../reducers/credentialsReducer';
+import { setNotification } from '../reducers/notificationReducer';
 
 export default function useAuth({ setToggleForm }) {
     const credentials = useSelector(state => state.credentials)
@@ -19,6 +20,7 @@ export default function useAuth({ setToggleForm }) {
             const currentUser = JSON.parse(loggedUserJSON);
             recordService.setToken(currentUser.token);
             dispatch(setUser(currentUser));
+            dispatch(setNotification(`Welcome back, ${currentUser.username}!`, 5));
             setToggleForm({ accountForm: false, loginForm: false });
         } else {
             setToggleForm({ accountForm: false, loginForm: true });

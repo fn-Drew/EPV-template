@@ -5,6 +5,7 @@ import RecordsDisplay from "./components/RecordsDisplay";
 import useAuth from "./hooks/useAuth";
 import Dictation from "./components/Dictation";
 import DisplayWhenLoggedIn from "./components/DisplayWhenLoggedIn";
+import Notification from "./components/Notification";
 import "./App.css";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
 
     return (
         <div className="app">
+            <Notification />
             <AuthForm
                 handleLogin={handleLogin}
                 toggleForm={toggleForm}
