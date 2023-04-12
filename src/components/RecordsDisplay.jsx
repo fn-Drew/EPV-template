@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
-
+import { useQuery } from '@tanstack/react-query';
+import { useSelector } from 'react-redux';
+import recordService from '../services/records';
 import "../App.css";
 
-export default function RecordsDisplay({ records }) {
+export default function RecordsDisplay() {
     const [currentDayIndex, setCurrentDayIndex] = useState(0);
 
-    if (!records) {
-        return (
-            <div className="records-container">
-                <div className="record">
-                    loading...
-                </div>
-            </div>
-        );
-    }
+    const user = useSelector(state => state.user);
+    const { data: records } = useQuery(['records'], () => recordService.getAllUserRecords(user))
 
     const formatDate = (date) => {
         const options = {
@@ -88,7 +83,6 @@ export default function RecordsDisplay({ records }) {
             {days.slice(currentDayIndex, currentDayIndex + 1).map(([day, records]) => (
                 <div key={day}>
                     <h3>{day}</h3>
-
                     {records.map((record) => (
                         <div className="record" key={record.date}>
                             <div id="transcript">{record.record}</div>

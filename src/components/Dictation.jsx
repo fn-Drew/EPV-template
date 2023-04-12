@@ -23,7 +23,7 @@ export default function Dictation({ user }) {
                 clearInterval(logAndClearInterval);
             };
         }
-    }, [listening, transcript, user]);
+    }, [listening, transcript, user, createRecordMutation]);
 
     // If SpeechRecognition is not available, show an error message
     if (!recognition) {

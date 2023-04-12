@@ -3,10 +3,11 @@ import recordsService from "../services/records";
 
 const useRecords = (user, token) =>
     useQuery(
-        ["records", user],
-        () => recordsService.getAllUserRecords(user), {
-        refetchOnWindowFocus: false,
-        enabled: !!user && !!token
-    });
+        ["records"],
+        () => recordsService.getAllUserRecords(user),
+        {
+            refetchOnWindowFocus: false,
+            enabled: !!user && !!token
+        });
 
 export default useRecords;

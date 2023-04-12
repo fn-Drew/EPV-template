@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
 import AuthForm from "./components/AuthForm";
 import LogoutButton from "./components/LogoutButton";
 import RecordsDisplay from "./components/RecordsDisplay";
 import useAuth from "./hooks/useAuth";
-import useUserRecords from "./hooks/useUserRecords";
 import Dictation from "./components/Dictation";
 import DisplayWhenLoggedIn from "./components/DisplayWhenLoggedIn";
+import recordService from "./services/records";
 import "./App.css";
 
 function App() {
     const [toggleForm, setToggleForm] = useState({ accountForm: false, loginForm: false });
-    const records = useSelector(state => state.records);
     const user = useSelector(state => state.user);
-
-    const { error, isError } = useUserRecords(user?.id, user?.token);
+    // get records with react-query
+    const { isLoading, error, isError } = useQuery(['records'], () => recordService.getAllUserRecords(user))
 
     const {
         handleAccountCreation,
@@ -22,12 +22,16 @@ function App() {
         handleLogout,
     } = useAuth({ setToggleForm });
 
-
-    // logout user if token expired
-    if (isError) {
-        if (error.response.data.error) {
-            handleLogout();
-            console.log('token expired, login again');
+    if (user) {
+        if (isLoading) {
+            return <p>Loading...</p>;
+        }
+        // logout user if token expired
+        // TODO: jank way to do this, need to refactor
+        if (isError) {
+            if (error.response.data.error) {
+                handleLogout();
+            }
         }
     }
 
@@ -41,7 +45,7 @@ function App() {
             />
             <DisplayWhenLoggedIn user={user}>
                 <Dictation user={user} />
-                <RecordsDisplay records={records} user={user} />
+                <RecordsDisplay />
                 <LogoutButton handleLogout={handleLogout} />
             </DisplayWhenLoggedIn>
         </div>

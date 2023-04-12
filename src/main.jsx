@@ -5,7 +5,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
-import recordReducer from "./reducers/recordReducer";
 import userReducer from "./reducers/userReducer";
 import credentialsReducer from "./reducers/credentialsReducer";
 
@@ -13,7 +12,6 @@ const queryClient = new QueryClient();
 
 const store = configureStore({
     reducer: {
-        records: recordReducer,
         user: userReducer,
         credentials: credentialsReducer,
         // filter: filterReducer,
