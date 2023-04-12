@@ -1,16 +1,20 @@
 /* eslint-disable no-console */
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import loginService from '../services/login';
 import recordService from '../services/records';
 import useUserRecords from './useUserRecords';
 import useCreateUser from './useCreateUser';
+import { setRecords } from '../reducers/recordReducer';
 
-export default function useAuth({ setToggleForm, setRecords }) {
+export default function useAuth({ setToggleForm }) {
     const [user, setUser] = useState(null);
     const [credentials, setCredentials] = useState({ username: '', password: '' });
 
     const { data: userRecords, refetch: refetchRecords } = useUserRecords(user?.id, user?.token);
     const createUserMutation = useCreateUser();
+
+    const dispatch = useDispatch();
 
     // Function to restore user session
     const restoreUserSession = () => {
@@ -33,9 +37,9 @@ export default function useAuth({ setToggleForm, setRecords }) {
     // if user records change, update records state
     useEffect(() => {
         if (userRecords) {
-            setRecords(userRecords);
+            dispatch(setRecords(userRecords));
         }
-    }, [userRecords, setRecords]);
+    }, [userRecords]);
 
     const handleAccountCreation = async (event) => {
         event.preventDefault();

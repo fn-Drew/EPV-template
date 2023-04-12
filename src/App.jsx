@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import AuthForm from "./components/AuthForm";
 import LogoutButton from "./components/LogoutButton";
 import RecordsDisplay from "./components/RecordsDisplay";
@@ -9,8 +10,8 @@ import DisplayWhenLoggedIn from "./components/DisplayWhenLoggedIn";
 import "./App.css";
 
 function App() {
-    const [records, setRecords] = useState("");
     const [toggleForm, setToggleForm] = useState({ accountForm: false, loginForm: false });
+    const records = useSelector(state => state.records);
 
     const {
         user,
@@ -19,7 +20,7 @@ function App() {
         handleAccountCreation,
         handleLogin,
         handleLogout,
-    } = useAuth({ setToggleForm, setRecords });
+    } = useAuth({ setToggleForm });
 
     const { error, isError } = useUserRecords(user?.id, user?.token);
 
