@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AuthForm from "./components/AuthForm";
 import LogoutButton from "./components/LogoutButton";
 import RecordsDisplay from "./components/RecordsDisplay";
 import useAuth from "./hooks/useAuth";
@@ -7,6 +6,7 @@ import Dictation from "./components/Dictation";
 import DisplayWhenLoggedIn from "./components/DisplayWhenLoggedIn";
 import Notification from "./components/Notification";
 import "./App.css";
+import AuthForm from "./components/AuthForm";
 
 function App() {
     const [toggleForm, setToggleForm] = useState({ accountForm: false, loginForm: false });
@@ -16,17 +16,19 @@ function App() {
         handleAccountCreation,
         handleLogin,
         handleLogout,
-    } = useAuth({ setToggleForm });
+    } = useAuth(setToggleForm);
 
     return (
         <div className="app">
             <Notification />
-            <AuthForm
-                handleLogin={handleLogin}
-                toggleForm={toggleForm}
-                setToggleForm={setToggleForm}
-                handleAccountCreation={handleAccountCreation}
-            />
+            <DisplayWhenLoggedIn displayWhenNotLoggedIn>
+                <AuthForm
+                    handleLogin={handleLogin}
+                    toggleForm={toggleForm}
+                    setToggleForm={setToggleForm}
+                    handleAccountCreation={handleAccountCreation}
+                />
+            </DisplayWhenLoggedIn>
             <DisplayWhenLoggedIn>
                 <Dictation />
                 <RecordsDisplay handleLogout={handleLogout} />

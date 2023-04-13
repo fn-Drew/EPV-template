@@ -8,7 +8,7 @@ import { setUser } from '../reducers/userReducer';
 import { setCredentials } from '../reducers/credentialsReducer';
 import { setNotification } from '../reducers/notificationReducer';
 
-export default function useAuth({ setToggleForm }) {
+export default function useAuth(setToggleForm) {
     const credentials = useSelector(state => state.credentials)
     const createUserMutation = useCreateUser();
     const dispatch = useDispatch();
