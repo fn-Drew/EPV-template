@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import recordService from '../services/records';
@@ -105,3 +106,7 @@ export default function RecordsDisplay({ handleLogout }) {
         </div>
     ) : null;
 }
+
+RecordsDisplay.propTypes = {
+    handleLogout: PropTypes.func.isRequired,
+};

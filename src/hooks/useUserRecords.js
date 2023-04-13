@@ -7,7 +7,10 @@ const useRecords = (user, token) =>
         () => recordsService.getAllUserRecords(user),
         {
             refetchOnWindowFocus: false,
-            enabled: !!user && !!token
+            enabled: !!user && !!token,
+            onError: () => {
+
+            }
         });
 
 export default useRecords;

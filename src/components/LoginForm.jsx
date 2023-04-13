@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCredentials } from '../reducers/credentialsReducer';
 
@@ -48,5 +49,10 @@ function LoginForm({
         </>
     );
 }
+
+LoginForm.propTypes = {
+    handleLogin: PropTypes.func.isRequired,
+    setToggleForm: PropTypes.func.isRequired,
+};
 
 export default LoginForm;

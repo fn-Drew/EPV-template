@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import LoginForm from './LoginForm'
 import AccountForm from './AccountForm'
 
@@ -6,8 +7,6 @@ export default function AuthForm(
     {
         handleLogin,
         handleAccountCreation,
-        credentials,
-        setCredentials,
         toggleForm,
         setToggleForm
     }) {
@@ -17,8 +16,6 @@ export default function AuthForm(
                 toggleForm.loginForm ? (
                     <LoginForm
                         handleLogin={handleLogin}
-                        credentials={credentials}
-                        setCredentials={setCredentials}
                         setToggleForm={setToggleForm}
                     />
                 ) : null
@@ -27,8 +24,6 @@ export default function AuthForm(
                 toggleForm.accountForm ? (
                     <AccountForm
                         handleAccountCreation={handleAccountCreation}
-                        credentials={credentials}
-                        setCredentials={setCredentials}
                         setToggleForm={setToggleForm}
                     />
                 ) : null
@@ -36,3 +31,15 @@ export default function AuthForm(
         </>
     )
 }
+
+AuthForm.propTypes = {
+    handleLogin: PropTypes.func.isRequired,
+    handleAccountCreation: PropTypes.func.isRequired,
+
+    toggleForm: PropTypes.shape({
+        loginForm: PropTypes.bool.isRequired,
+        accountForm: PropTypes.bool.isRequired,
+    }).isRequired,
+
+    setToggleForm: PropTypes.func.isRequired,
+};
