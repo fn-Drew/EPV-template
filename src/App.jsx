@@ -29,7 +29,7 @@ function App() {
             />
             <DisplayWhenLoggedIn>
                 <Dictation />
-                <RecordsDisplay />
+                <RecordsDisplay handleLogout={handleLogout} />
                 <LogoutButton handleLogout={handleLogout} />
             </DisplayWhenLoggedIn>
         </div>

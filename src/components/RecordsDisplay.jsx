@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import recordService from '../services/records';
 import "../App.css";
+import { setNotification } from '../reducers/notificationReducer';
 
-export default function RecordsDisplay() {
+export default function RecordsDisplay({ handleLogout }) {
     const [currentDayIndex, setCurrentDayIndex] = useState(0);
 
     const user = useSelector(state => state.user);
-    const { data: records } = useQuery(['records'], () => recordService.getAllUserRecords(user))
+    const { data: records, error, isError } = useQuery(['records'], () => recordService.getAllUserRecords(user));
+    const dispatch = useDispatch();
+
+    // FIX: for some reason very slow, maybe because # of retries with react query?
+    if (isError) {
+        if (error.response.status === 401) {
+            handleLogout();
+            dispatch(setNotification('Your session has expired. Please log in again.'));
+        }
+    }
 
     const formatDate = (date) => {
         const options = {
