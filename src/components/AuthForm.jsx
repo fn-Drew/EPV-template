@@ -13,9 +13,7 @@ function DualForm({
     const credentials = useSelector(state => state.credentials);
     return (
         <>
-            <div> Dual Form </div>
-            {toggleForm.loginForm ? <div> Login </div> : <div> Create Account </div>}
-            {/* CHANGE  */}
+            <div>{toggleForm.loginForm ? 'Login' : 'Create Account'} </div>
             <form className="form" onSubmit={toggleForm.loginForm ? handleLogin : handleAccountCreation}>
                 <div>
                     username
@@ -44,11 +42,9 @@ function DualForm({
                     className="button"
                     type="button"
                     onClick={() => {
-                        // CHANGE
                         setToggleForm({ loginForm: !toggleForm.loginForm, accountForm: !toggleForm.accountForm });
                     }}
                 >
-                    {/* CHANGE  */}
                     Already have an account?
                 </button>
             </form>
