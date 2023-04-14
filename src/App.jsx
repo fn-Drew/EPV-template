@@ -5,8 +5,9 @@ import useAuth from "./hooks/useAuth";
 import Dictation from "./components/Dictation";
 import DisplayWhenLoggedIn from "./components/DisplayWhenLoggedIn";
 import Notification from "./components/Notification";
-import "./App.css";
 import AuthForm from "./components/AuthForm";
+import Header from "./components/Header";
+import "./App.css";
 
 function App() {
     const [toggleForm, setToggleForm] = useState({ accountForm: false, loginForm: false });
@@ -30,6 +31,7 @@ function App() {
                 />
             </DisplayWhenLoggedIn>
             <DisplayWhenLoggedIn>
+                <Header />
                 <Dictation />
                 <RecordsDisplay handleLogout={handleLogout} />
                 <LogoutButton handleLogout={handleLogout} />
