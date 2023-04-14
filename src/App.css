@@ -1,7 +1,4 @@
-#date {
-    color: gray;
-}
-
+/* App.jsx */
 .app {
     display: flex;
     flex-direction: column;
@@ -10,6 +7,7 @@
     height: 100vh;
 }
 
+/* components/Records.jsx */
 .records-container {
     height: 50%;
     width: 50%;
@@ -19,25 +17,72 @@
     border-radius: 1rem;
 }
 
+#date {
+    color: gray;
+}
+
 .button {
     border: none;
     background-color: grey;
     color: white;
     font-weight: bold;
-    padding: 15px 32px;
+    padding: 1rem 1rem;
     margin: 1rem 1rem;
     cursor: pointer;
 }
 
+/* components/AuthForm.jsx */
 .form {
-    outline: 3px solid white;
-    padding: 2rem;
-    text-align: left;
-    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 2rem;
+}
+
+.form-title {
+    font-size: 2rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.form-submit {
+    width: 100%;
+    font-size: 1rem;
+    margin: 2rem 0;
+    border: none;
+    align-self: center;
+    color: white;
+    background-color: hsl(209, 100%, 50%);
+    padding: 1rem;
+    cursor: pointer;
+}
+
+.form-alt {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-alt-link {
+    color: hsl(209, 100%, 50%);
+    background-color: black;
+    cursor: pointer;
+    /* remove default button styling */
+    border: none;
+    padding: 0;
+    font: inherit;
 }
 
 .input {
-    width: 70%;
-    margin: 0.5rem 0;
-    padding: 1rem, 0;
+    width: 100%;
+    margin: .5rem 0;
+    padding: .5rem 0;
+    padding-left: 1rem;
+    box-sizing: border-box;
+    background-color: hsl(0, 0%, 90%);
+    border: none;
+}
+
+.input-label {
+    font-size: 1rem;
+    text-align: left;
 }

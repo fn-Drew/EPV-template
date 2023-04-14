@@ -12,43 +12,44 @@ function DualForm({
     const dispatch = useDispatch();
     const credentials = useSelector(state => state.credentials);
     return (
-        <>
-            <div>{toggleForm.loginForm ? 'Login' : 'Create Account'} </div>
-            <form className="form" onSubmit={toggleForm.loginForm ? handleLogin : handleAccountCreation}>
-                <div>
-                    username
-                    <input
-                        className="input"
-                        type="text"
-                        value={credentials.username}
-                        name="Username"
-                        onChange={({ target }) => dispatch(setCredentials({ ...credentials, username: target.value }))}
-                    />
-                </div>
-                <div>
-                    password
-                    <input
-                        className="input"
-                        type="password"
-                        value={credentials.password}
-                        name="Password"
-                        onChange={({ target }) => dispatch(setCredentials({ ...credentials, password: target.value }))}
-                    />
-                </div>
-                <button className="button" type="submit">
-                    {toggleForm.loginForm ? 'Login' : 'Create Account'}
-                </button>
+        <form className="form" onSubmit={toggleForm.loginForm ? handleLogin : handleAccountCreation}>
+            <div className="form-title">{toggleForm.loginForm ? 'Login' : 'Sign Up '} </div>
+            <div className="input-group">
+                <div className="input-label"> Username </div>
+                <input
+                    className="input"
+                    type="text"
+                    value={credentials.username}
+                    name="Username"
+                    onChange={({ target }) => dispatch(setCredentials({ ...credentials, username: target.value }))}
+                />
+            </div>
+            <div className="input-group">
+                <div className="input-label"> Password </div>
+                <input
+                    className="input"
+                    type="password"
+                    value={credentials.password}
+                    name="Password"
+                    onChange={({ target }) => dispatch(setCredentials({ ...credentials, password: target.value }))}
+                />
+            </div>
+            <button className="form-submit" type="submit">
+                {toggleForm.loginForm ? 'Login' : 'Sign Up '}
+            </button>
+            <div className="form-alt">
+                {toggleForm.loginForm ? 'Don\'t have an account?' : 'Already have an account?'}
                 <button
-                    className="button"
+                    className="form-alt-link"
                     type="button"
                     onClick={() => {
                         setToggleForm({ loginForm: !toggleForm.loginForm, accountForm: !toggleForm.accountForm });
                     }}
                 >
-                    Already have an account?
+                    {toggleForm.loginForm ? 'Sign Up' : 'Login'}
                 </button>
-            </form>
-        </>
+            </div>
+        </form>
     );
 }
 
