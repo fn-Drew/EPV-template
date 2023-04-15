@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import useCreateRecord from '../hooks/useCreateRecords';
+import '../App.css';
 
 // Initialize SpeechRecognition, if it's available in the browser
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -47,9 +48,9 @@ export default function Dictation() {
     }
 
     return (
-        <div>
-            <button type="button" onClick={toggleListening}>{listening ? 'stop' : 'start'}</button>
-            <p>live transcript: {transcript}</p>
-        </div >
+        <div className="dictation-container">
+            <button className={listening ? "stop-button" : "start-button"} type="button" onClick={toggleListening}>{listening ? 'stop' : 'start'}</button>
+            {transcript ? <p>Transcript: {transcript}</p> : <p>&larr; Start transcribing now!</p>}
+        </div>
     );
 }

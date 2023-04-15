@@ -1,6 +1,6 @@
 :root {
     --primary: hsl(0, 0%, 0%);
-    --secondary: hsl(0, 0%, 90%);
+    --secondary: hsl(0, 0%, 70%);
     --tertiary: hsl(209, 100%, 50%);
 }
 /* App.jsx */
@@ -11,6 +11,32 @@
     justify-content: space-evenl;
     align-items: center;
     height: 100%;
+}
+
+.dictation-container{
+    display: flex;
+    margin-bottom: 2rem;
+    justify-content: space-evenly;
+    width: 50%;
+}
+
+.stop-button, .start-button {
+    font-weight: 800;
+    padding: 1rem 1rem;
+    border: none;
+    outline: 2px solid var(--secondary); 
+    outline-offset: 8px;
+    cursor: pointer;
+}
+
+.stop-button {
+    background-color: hsl(10, 80%, 50%);
+    color: white;
+    border-radius: 100%;
+}
+
+.start-button {
+    background-color: hsl(120, 80%, 50%);
 }
 
 /* components/Header.jsx */

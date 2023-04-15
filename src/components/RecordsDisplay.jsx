@@ -83,35 +83,6 @@ export default function RecordsDisplay({ handleLogout }) {
         }
     }
 
-    // return records ? (
-    //     <div className="records-container">
-    //         {/* Display only the current day based on currentDayIndex */}
-    //         {days.slice(currentDayIndex, currentDayIndex + 1).map(([day, records]) => (
-    //             <>
-    //                 <div className="records-nav">
-    //                     <button className="records-nav-button" type="button" onClick={prevDay} disabled={currentDayIndex === 0}>
-    //                         &larr;
-    //                     </button>
-    //                     <h3>{day}</h3>
-    //                     <button className="records-nav-button" type="button" onClick={nextDay} disabled={currentDayIndex === days.length - 1}>
-    //                         &rarr;
-    //                     </button>
-    //                 </div>
-    //                 <div key={day} className="records-list">
-    //                     {records.map((record) => (
-    //                         <div className="record" key={record.date}>
-    //                             <div id="transcript">{record.record}</div>
-    //                             <div id="date">{formatDate(record.date)}</div>
-    //                         </div>
-    //                     ))}
-    //                 </div>
-    //             </>
-    //         ))}
-    //     </div>
-    // ) : null;
-
-
-
     return records ? (
         days.slice(currentDayIndex, currentDayIndex + 1).map(([day, records]) => (
             <div className="records-container">
