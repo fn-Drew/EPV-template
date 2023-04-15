@@ -55,13 +55,53 @@
 
 /* components/Records.jsx */
 .records-container {
-    height: 50vh;
     width: 50%;
     outline: 2px solid var(--secondary);
-    padding: 2rem;
-    overflow: scroll;
     border-radius: 1rem;
 }
+
+.records-list {
+    overflow-y: scroll;
+    height: 50vh;
+    padding: 1rem;
+}
+
+.records-nav {
+    display: flex;
+    background-color: black;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--secondary);
+}
+
+/* date between buttons */
+.records-nav > h3 {
+    align-self: center;
+}
+
+.records-nav-button {
+    border: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 1rem 1rem;
+    padding: .5rem 1rem;
+    cursor: pointer;
+}
+
+.records-nav-button:hover {
+    background-color: var(--tertiary);
+    color: white;
+}
+
+.records-nav-button:disabled {
+    background-color: hsl(0, 0%, 30%);
+    color: hsl(0, 0%, 20%);
+    cursor: not-allowed;
+}
+.records-nav-button:hover:disabled {
+    background-color: hsl(0, 0%, 30%);
+    color: hsl(0, 0%, 20%);
+}
+
 
 #date {
     color: gray;
