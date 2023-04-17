@@ -1,39 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import '../App.css';
 
-function ProfilePicture() {
-    return (
-        <img
-            className="header-pfp"
-            alt="pfp"
-            src="https://st3.depositphotos.com/6672868/13701/v/600/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
-        />
-    )
-}
-
-function Logo() {
-    return (
-        <img
-            className="header-pfp"
-            alt="pfp"
-            src="https://www.goomlandscapes.co.nz/wp-content/uploads/2018/08/logo-placeholder.png"
-        />
-    )
-}
-
-export default function Header() {
+export default function Header({ handleLogout }) {
     const user = useSelector(state => state.user);
     return (
         <header className="header-container">
-            <div className="header-brand">
-                <Logo />
-                {/* <div className="header-title"> Speech Analysis </div> */}
+            <div className="header-title">
+                Speech Analysis
             </div >
             <div className="header-user">
-                <ProfilePicture />
                 <div className="header-username"> {user.username} </div>
+                <button className="logout-button" type="button" onClick={handleLogout}>
+                    logout
+                </button>
             </div>
         </header >
     );
 }
+
+Header.propTypes = {
+    handleLogout: PropTypes.func.isRequired,
+};

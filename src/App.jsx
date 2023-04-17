@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import LogoutButton from "./components/LogoutButton";
 import RecordsDisplay from "./components/RecordsDisplay";
 import useAuth from "./hooks/useAuth";
 import Dictation from "./components/Dictation";
@@ -31,10 +30,9 @@ function App() {
                 />
             </DisplayWhenLoggedIn>
             <DisplayWhenLoggedIn>
-                <Header />
+                <Header handleLogout={handleLogout} />
                 <Dictation />
                 <RecordsDisplay handleLogout={handleLogout} />
-                <LogoutButton handleLogout={handleLogout} />
             </DisplayWhenLoggedIn>
         </div>
     );
