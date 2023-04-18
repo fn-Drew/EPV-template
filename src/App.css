@@ -39,6 +39,13 @@
     background-color: hsl(120, 80%, 50%);
 }
 
+/* components/Notification.jsx */
+.notification {
+    margin: auto;
+    outline: 1px solid white;
+    outline-offset: .5rem;
+}
+
 /* components/Header.jsx */
 .header-container {
     position: absolute;

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
+import Notification from './Notification';
 import '../App.css';
 
 export default function Header({ handleLogout }) {
@@ -10,6 +11,7 @@ export default function Header({ handleLogout }) {
             <div className="header-title">
                 Speech Analysis
             </div >
+            <Notification />
             <div className="header-user">
                 <div className="header-username"> {user.username} </div>
                 <button className="logout-button" type="button" onClick={handleLogout}>

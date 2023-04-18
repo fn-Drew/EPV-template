@@ -20,8 +20,8 @@ function App() {
 
     return (
         <div className="app">
-            <Notification />
             <DisplayWhenLoggedIn displayWhenNotLoggedIn>
+                <Notification />
                 <AuthForm
                     handleLogin={handleLogin}
                     toggleForm={toggleForm}
