@@ -42,9 +42,9 @@ export default function RecordsDisplay({ handleLogout }) {
 
     // groupByDate takes an array of records and returns an object
     // where each key is a formatted day (YYYY Month DD) and its value is an array of records for that day
-    const groupByDate = (records) => {
-        if (!records) return {};
-        const groupedRecords = records.reduce((acc, record) => {
+    const groupByDate = (ungroupedRecords) => {
+        if (!ungroupedRecords) return {};
+        const groupedRecords = ungroupedRecords.reduce((acc, record) => {
             // Format the date to only show the year, month, and day
             const day = formatDay(record.date);
             // If the day is not already in the accumulator object, create an empty array for it
@@ -84,8 +84,8 @@ export default function RecordsDisplay({ handleLogout }) {
     }
 
     return records ? (
-        days.slice(currentDayIndex, currentDayIndex + 1).map(([day, records]) => (
-            <div className="records-container">
+        days.slice(currentDayIndex, currentDayIndex + 1).map(([day, paginatedRecords]) => (
+            <div className="records-container" key={day}>
                 {/* Display only the current day based on currentDayIndex */}
                 <div className="records-nav">
                     <button className="records-nav-button" type="button" onClick={prevDay} disabled={currentDayIndex === 0}>
@@ -97,8 +97,8 @@ export default function RecordsDisplay({ handleLogout }) {
                     </button>
                 </div>
                 <div key={day} className="records-list">
-                    {records.map((record) => (
-                        <div className="record" key={record.date}>
+                    {paginatedRecords.map((record) => (
+                        <div className="record" key={record.id}>
                             <div id="transcript">{record.record}</div>
                             <div id="date">{formatDate(record.date)}</div>
                         </div>

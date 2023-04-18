@@ -25,15 +25,6 @@ recordRouter.get("/:id", async (request, response) => {
         return response.status(401).json({ error: 'token invalid' })
     }
 
-    if (!userID) {
-        response
-            .status(400)
-            .json({
-                error: "user id is required to record a transcription",
-            })
-            .end();
-    }
-
     const user = await User.findById(userID).populate("records");
 
     function decrypt(text) {
@@ -49,11 +40,13 @@ recordRouter.get("/:id", async (request, response) => {
         return decrypted.toString();
     }
 
+    // maybe an expensive calculation
     const decryptedRecords = user.records.map((record) => {
         const decryptedRecord = decrypt(record.encryptedRecord);
         return {
             record: decryptedRecord,
             date: record.date,
+            id: record.id,
         };
     });
 
