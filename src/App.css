@@ -24,19 +24,19 @@
     font-weight: 800;
     padding: 1rem 1rem;
     border: none;
-    outline: 2px solid var(--secondary); 
     outline-offset: 8px;
+    background-color: var(--primary);
     cursor: pointer;
+    color: white;
 }
 
 .stop-button {
-    background-color: hsl(10, 80%, 50%);
-    color: white;
-    border-radius: 100%;
+    border-radius: 30%;
+    outline: 2px solid hsl(10, 80%, 50%);
 }
 
 .start-button {
-    background-color: hsl(120, 80%, 50%);
+    outline: 2px solid hsl(120, 80%, 50%);
 }
 
 /* components/Notification.jsx */
@@ -94,7 +94,6 @@
 .records-container {
     width: 50%;
     outline: 2px solid var(--secondary);
-    border-radius: 1rem;
 }
 
 .records-list {
