@@ -10,6 +10,6 @@ const userSlice = createSlice({
     }
 })
 
-export const { setCredentials, clearCredentials } = userSlice.actions
+export const { setCredentials } = userSlice.actions
 
 export default userSlice.reducer

@@ -8,6 +8,7 @@ import "./index.css";
 import userReducer from "./reducers/userReducer";
 import credentialsReducer from "./reducers/credentialsReducer";
 import notificationReducer from "./reducers/notificationReducer";
+import filterReducer from "./reducers/filterReducer";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ const store = configureStore({
         user: userReducer,
         credentials: credentialsReducer,
         notification: notificationReducer,
+        filter: filterReducer,
         // filter: filterReducer,
     }
 })

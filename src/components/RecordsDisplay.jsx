@@ -6,12 +6,21 @@ import recordService from '../services/records';
 import "../App.css";
 import { setNotification } from '../reducers/notificationReducer';
 
+function NumberOfRecords({ records }) {
+    return (
+        <div className="number-of-records">
+            {records.length} records found
+        </div>
+    );
+}
+
 export default function RecordsDisplay({ handleLogout }) {
     const [currentDayIndex, setCurrentDayIndex] = useState(0);
 
     const user = useSelector(state => state.user);
     const { data: records, error, isError } = useQuery(['records'], () => recordService.getAllUserRecords(user));
     const dispatch = useDispatch();
+    const filter = useSelector(state => state.filter);
 
     // FIX: for some reason very slow, maybe because # of retries with react query?
     if (isError) {
@@ -22,7 +31,6 @@ export default function RecordsDisplay({ handleLogout }) {
     }
 
     const formatDate = (date) => {
-
         const options = {
             hour: '2-digit',
             minute: '2-digit',
@@ -48,17 +56,19 @@ export default function RecordsDisplay({ handleLogout }) {
     // where each key is a formatted day (YYYY Month DD) and its value is an array of records for that day
     const groupByDate = (ungroupedRecords) => {
         if (!ungroupedRecords) return {};
-        const groupedRecords = ungroupedRecords.reduce((acc, record) => {
-            // Format the date to only show the year, month, and day
-            const day = formatDay(record.date);
-            // If the day is not already in the accumulator object, create an empty array for it
-            if (!acc[day]) {
-                acc[day] = [];
-            }
-            // Add the record to the array for its corresponding day
-            acc[day].push(record);
-            return acc;
-        }, {});
+        const groupedRecords = ungroupedRecords
+            .filter((record) => record.record.toLowerCase().includes(filter.toLowerCase()))
+            .reduce((acc, record) => {
+                // Format the date to only show the year, month, and day
+                const day = formatDay(record.date);
+                // If the day is not already in the accumulator object, create an empty array for it
+                if (!acc[day]) {
+                    acc[day] = [];
+                }
+                // Add the record to the array for its corresponding day
+                acc[day].push(record);
+                return acc;
+            }, {});
 
         return groupedRecords;
     }
@@ -90,7 +100,7 @@ export default function RecordsDisplay({ handleLogout }) {
         days.slice(currentDayIndex, currentDayIndex + 1).map(([day, paginatedRecords]) => (
             <div className="records-container" key={day}>
                 {/* Display only the current day based on currentDayIndex */}
-                <div className="records-nav">
+                <nav className="records-nav">
                     <button className="records-nav-button" type="button" onClick={prevDay} disabled={currentDayIndex === 0}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="records-nav-svg">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -102,7 +112,7 @@ export default function RecordsDisplay({ handleLogout }) {
                             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                         </svg>
                     </button>
-                </div>
+                </nav>
                 <div key={day} className="records-list">
                     {paginatedRecords.map((record) => (
                         <div className="record" key={record.id}>
