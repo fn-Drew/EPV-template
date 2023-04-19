@@ -1,7 +1,46 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
 import { setFilter } from '../reducers/filterReducer';
+import recordService from '../services/records';
 import '../App.css';
+
+function FilterRecordInfo() {
+    const filter = useSelector(state => state.filter);
+    const user = useSelector(state => state.user);
+    const { data: records, error, isError, isLoading } = useQuery(['records'], () => recordService.getAllUserRecords(user));
+
+    if (isError) {
+        return (
+            <div> {error} </div>
+        )
+    }
+
+    if (isLoading) {
+        return (
+            <div> loading... </div>
+        )
+    }
+
+    // Function to count occurrences of the filtered word in all records
+    const countOccurrences = () => {
+        const filterRegex = new RegExp(filter, 'gi');
+        return records.reduce((count, record) => {
+            const matches = record.record.match(filterRegex);
+            return count + (matches ? matches.length : 0);
+        }, 0);
+    };
+
+    const occurrences = countOccurrences(records, filter);
+
+    return (
+        <div className="filter-records-info">
+            <div> {records.length} total </div>
+            <div> {records.filter(record => record.record.toLowerCase().includes(filter.toLowerCase())).length} results </div>
+            <div> {occurrences} occurrences </div>
+        </div>
+    )
+}
 
 export default function FilterRecords() {
 
@@ -11,8 +50,9 @@ export default function FilterRecords() {
     };
 
     return (
-        <form className="filter-records">
-            <input name="filter" onInput={(event) => handleFilterChange(event, setFilter)} type="text" placeholder="Filter records" />
-        </form>
+        <>
+            <input className="filter-records-input" name="filter" onInput={(event) => handleFilterChange(event, setFilter)} type="text" placeholder="Filter records" />
+            <FilterRecordInfo />
+        </>
     );
 }

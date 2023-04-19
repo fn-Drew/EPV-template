@@ -6,14 +6,6 @@ import recordService from '../services/records';
 import "../App.css";
 import { setNotification } from '../reducers/notificationReducer';
 
-function NumberOfRecords({ records }) {
-    return (
-        <div className="number-of-records">
-            {records.length} records found
-        </div>
-    );
-}
-
 export default function RecordsDisplay({ handleLogout }) {
     const [currentDayIndex, setCurrentDayIndex] = useState(0);
 

@@ -7,6 +7,7 @@ import Notification from "./components/Notification";
 import AuthForm from "./components/AuthForm";
 import Header from "./components/Header";
 import "./App.css";
+import FilterRecords from "./components/FilterRecords";
 
 function App() {
     const [toggleForm, setToggleForm] = useState({ accountForm: false, loginForm: false });
@@ -31,7 +32,10 @@ function App() {
             </DisplayWhenLoggedIn>
             <DisplayWhenLoggedIn>
                 <Header handleLogout={handleLogout} />
-                <Dictation />
+                <section>
+                    <Dictation />
+                    <FilterRecords />
+                </section>
                 <RecordsDisplay handleLogout={handleLogout} />
             </DisplayWhenLoggedIn>
         </div>

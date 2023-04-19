@@ -12,6 +12,14 @@
     align-items: center;
 }
 
+.app > section {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+}
+
+/* Dictation.jsx */
+
 .dictation-container{
     display: flex;
     align-items: center;
@@ -30,6 +38,15 @@
 .stop-svg, .start-svg {
     width: 4rem;
     height: 4rem;
+}
+
+/* FilterRecords.jsx */
+.filter-records-input {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    outline: 2px solid var(--secondary);
 }
 
 /* components/Notification.jsx */

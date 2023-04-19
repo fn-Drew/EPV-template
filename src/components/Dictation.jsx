@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import FilterRecords from './FilterRecords';
 import useCreateRecord from '../hooks/useCreateRecords';
 import '../App.css';
 
@@ -64,7 +63,6 @@ export default function Dictation() {
                 }
             </button>
             {transcript ? <p>Transcript: {transcript}</p> : <p>&larr; Start transcribing now!</p>}
-            <FilterRecords />
         </div>
     );
 }
