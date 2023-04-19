@@ -92,11 +92,15 @@ export default function RecordsDisplay({ handleLogout }) {
                 {/* Display only the current day based on currentDayIndex */}
                 <div className="records-nav">
                     <button className="records-nav-button" type="button" onClick={prevDay} disabled={currentDayIndex === 0}>
-                        &larr;
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="records-nav-svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                        </svg>
                     </button>
                     <h3>{day}</h3>
                     <button className="records-nav-button" type="button" onClick={nextDay} disabled={currentDayIndex === days.length - 1}>
-                        &rarr;
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="records-nav-svg">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                        </svg>
                     </button>
                 </div>
                 <div key={day} className="records-list">
