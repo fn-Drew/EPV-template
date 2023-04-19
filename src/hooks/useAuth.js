@@ -37,7 +37,6 @@ export default function useAuth(setToggleForm) {
     const handleLogin = async (event) => {
         event.preventDefault();
         loginUserMutation.mutate(credentials);
-        setToggleForm({ accountForm: false, loginForm: false });
     }
 
     const handleLogout = () => {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCredentials } from '../reducers/credentialsReducer';
 
-function DualForm({
+function AuthForm({
     handleAccountCreation,
     handleLogin,
     toggleForm,
@@ -53,7 +53,7 @@ function DualForm({
     );
 }
 
-DualForm.propTypes = {
+AuthForm.propTypes = {
     handleAccountCreation: PropTypes.func.isRequired,
     handleLogin: PropTypes.func.isRequired,
     setToggleForm: PropTypes.func.isRequired,
@@ -63,4 +63,4 @@ DualForm.propTypes = {
     }).isRequired,
 };
 
-export default DualForm;
+export default AuthForm;
