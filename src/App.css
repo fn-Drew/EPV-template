@@ -1,16 +1,15 @@
 :root {
     --primary: hsl(0, 0%, 0%);
-    --secondary: hsl(0, 0%, 70%);
+    --secondary: hsl(0, 0%, 30%);
     --tertiary: hsl(209, 100%, 50%);
 }
+
 /* App.jsx */
 .app {
     display: flex;
     padding-top: 10rem;
     flex-direction: column;
-    justify-content: space-evenl;
     align-items: center;
-    height: 100%;
 }
 
 .dictation-container{
@@ -32,11 +31,11 @@
 
 .stop-button {
     border-radius: 30%;
-    outline: 2px solid hsl(10, 80%, 50%);
+    outline: 2px solid hsl(10, 40%, 40%);
 }
 
 .start-button {
-    outline: 2px solid hsl(120, 80%, 50%);
+    outline: 2px solid hsl(120, 40%, 40%);
 }
 
 /* components/Notification.jsx */
@@ -100,6 +99,22 @@
     overflow-y: scroll;
     height: 50vh;
     padding: 1rem;
+}
+
+.record {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--secondary);
+}
+
+.transcript {
+}
+
+.timestamp {
+    color: gray;
+    min-width: 5rem;
 }
 
 .records-nav {

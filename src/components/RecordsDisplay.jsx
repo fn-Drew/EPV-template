@@ -22,13 +22,17 @@ export default function RecordsDisplay({ handleLogout }) {
     }
 
     const formatDate = (date) => {
+
         const options = {
             hour: '2-digit',
             minute: '2-digit',
             hour12: true,
 
         };
-        return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
+        // return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
+        const formattedDate = new Intl.DateTimeFormat('en-US', options).format(new Date(date));
+        const [hour, minute, period] = formattedDate.split(/[:\s]/);
+        return `${parseInt(hour, 10)}:${minute} ${period}`;
     }
 
     const formatDay = (date) => {
@@ -53,7 +57,6 @@ export default function RecordsDisplay({ handleLogout }) {
             }
             // Add the record to the array for its corresponding day
             acc[day].push(record);
-
             return acc;
         }, {});
 
@@ -99,8 +102,8 @@ export default function RecordsDisplay({ handleLogout }) {
                 <div key={day} className="records-list">
                     {paginatedRecords.map((record) => (
                         <div className="record" key={record.id}>
-                            <div id="transcript">{record.record}</div>
-                            <div id="date">{formatDate(record.date)}</div>
+                            <div className="transcript">{record.record}</div>
+                            <div className="timestamp">{formatDate(record.date)}</div>
                         </div>
                     ))}
                 </div>

@@ -8,6 +8,8 @@ import { setUser } from '../reducers/userReducer';
 import { setNotification } from '../reducers/notificationReducer';
 
 export default function useAuth(setToggleForm) {
+    // if need to get loading, error, etc. from rq
+    // const { mutate: loginUserMutation, isLoading } = useLoginUser()
     const credentials = useSelector(state => state.credentials)
     const createUserMutation = useCreateUser();
     const loginUserMutation = useLoginUser()
