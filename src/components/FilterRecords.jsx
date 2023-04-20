@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { setFilter } from '../reducers/filterReducer';
 import recordService from '../services/records';
+import useUserRecords from '../hooks/useUserRecords';
 import '../App.css';
 
 function FilterRecordInfo() {
     const filter = useSelector(state => state.filter);
     const user = useSelector(state => state.user);
-    const { data: records, error, isError, isLoading } = useQuery(['records'], () => recordService.getAllUserRecords(user));
+    const { data: records, error, isError, isLoading } = useUserRecords(user, user.token);
 
     if (isError) {
         return (

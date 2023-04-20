@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { setCredentials } from "../reducers/credentialsReducer";
 import { setNotification } from "../reducers/notificationReducer";
@@ -26,20 +26,5 @@ const useLoginUser = () => {
         }
     });
 }
-
-// const useLoginUser = (credentials) => {
-//     const dispatch = useDispatch();
-//     useQuery(
-//         ["users"],
-//         () => loginService.login(credentials),
-//         {
-//             refetchOnWindowFocus: false,
-//             retry: false,
-//             onError: (err) => {
-//                 dispatch(setNotification(err.response.data.error, 5));
-//             }
-//         }
-//     )
-// }
 
 export default useLoginUser;

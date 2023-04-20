@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
-import recordService from '../services/records';
 import "../App.css";
 import { setNotification } from '../reducers/notificationReducer';
+import useUserRecords from '../hooks/useUserRecords';
 
 export default function RecordsDisplay({ handleLogout }) {
     const [currentDayIndex, setCurrentDayIndex] = useState(0);
 
     const user = useSelector(state => state.user);
-    const { data: records, error, isError } = useQuery(['records'], () => recordService.getAllUserRecords(user));
+    const { data: records, error, isError } = useUserRecords(user, user.token);
     const dispatch = useDispatch();
     const filter = useSelector(state => state.filter);
 
@@ -18,7 +17,7 @@ export default function RecordsDisplay({ handleLogout }) {
     if (isError) {
         if (error.response.status === 401) {
             handleLogout();
-            dispatch(setNotification('Your session has expired. Please log in again.'));
+            dispatch(setNotification('Your session has expired. Please log in again.', 10));
         }
     }
 
