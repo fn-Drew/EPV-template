@@ -67,6 +67,7 @@
 /* components/Header.jsx */
 .header-container {
     position: sticky;
+    top: 0;
     border-bottom: 2px solid var(--secondary);
     display: flex;
     justify-content: space-between;
@@ -183,8 +184,9 @@
 /* components/AuthForm.jsx */
 .form {
     display: flex;
+    height: 100vh;
+    justify-content: center;
     flex-direction: column;
-    padding: 1rem;
     gap: 2rem;
 }
 
@@ -213,10 +215,10 @@
 
 .form-alt-link {
     color: var(--tertiary);
-    background-color: black;
     cursor: pointer;
     /* remove default button styling */
     border: none;
+    background-color: inherit;
     padding: 0;
     font: inherit;
 }
