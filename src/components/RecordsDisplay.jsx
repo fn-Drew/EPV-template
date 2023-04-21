@@ -9,7 +9,7 @@ export default function RecordsDisplay({ handleLogout }) {
     const [currentDayIndex, setCurrentDayIndex] = useState(0);
 
     const user = useSelector(state => state.user);
-    const { data: records, error, isError } = useUserRecords(user, user.token);
+    const { data: records, error, isError, isLoading } = useUserRecords(user, user.token);
     const dispatch = useDispatch();
     const filter = useSelector(state => state.filter);
 
@@ -64,8 +64,51 @@ export default function RecordsDisplay({ handleLogout }) {
         return groupedRecords;
     }
 
+    const generateDummyData = () => {
+        const now = new Date();
+        const formattedDate = formatDay(now);
+        return isLoading ?
+            [
+                {
+                    id: 'dummy-1',
+                    date: now,
+                    record: 'Loading...',
+                },
+                {
+                    id: 'dummy-2',
+                    date: now,
+                    record: 'Loading...',
+                },
+                {
+                    id: 'dummy-3',
+                    date: now,
+                    record: 'Loading...',
+                },
+                {
+                    id: 'dummy-4',
+                    date: now,
+                    record: 'Loading...',
+                }
+            ]
+            :
+            [
+                {
+                    id: 'dummy-1',
+                    date: now,
+                    record: 'Welcome to speech analysis!',
+                },
+                {
+                    id: 'dummy-2',
+                    date: now,
+                    record: 'Click the green arrow to start recording.',
+                },
+            ].map((record) => ({ ...record, date: formattedDate }));
+    };
+
+    const displayRecords = records && records.length > 0 ? records : generateDummyData();
+
     // Group records by date using the groupByDate function
-    const groupedRecords = groupByDate(records);
+    const groupedRecords = groupByDate(displayRecords);
     // Convert the groupedRecords object into an array of key-value pairs (day and records)
     const days = Object.entries(groupedRecords);
 
@@ -87,7 +130,7 @@ export default function RecordsDisplay({ handleLogout }) {
         }
     }
 
-    return records ? (
+    return days ? (
         days.slice(currentDayIndex, currentDayIndex + 1).map(([day, paginatedRecords]) => (
             <div className="records-container" key={day}>
                 {/* Display only the current day based on currentDayIndex */}

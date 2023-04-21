@@ -39,7 +39,7 @@
     padding: 1rem 1rem;
     border: none;
     outline-offset: 8px;
-    background-color: var(--primary);
+    background-color: inherit;
     cursor: pointer;
     color: white;
 }
