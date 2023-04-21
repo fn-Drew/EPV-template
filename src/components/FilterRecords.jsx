@@ -7,18 +7,10 @@ import '../App.css';
 function FilterRecordInfo() {
     const filter = useSelector(state => state.filter);
     const user = useSelector(state => state.user);
-    const { data: records, error, isError, isLoading } = useUserRecords(user, user.token);
-
-    if (isError) {
-        return (
-            <div> {error} </div>
-        )
-    }
+    const { data: records, isLoading } = useUserRecords(user, user.token);
 
     if (isLoading) {
-        return (
-            <div> loading... </div>
-        )
+        return null;
     }
 
     // Function to count occurrences of the filtered word in all records
@@ -32,13 +24,12 @@ function FilterRecordInfo() {
 
     const occurrences = countOccurrences(records, filter);
 
-    return (
+    return filter && !isLoading ? (
         <div className="filter-records-info">
-            <div> {records.length} total </div>
-            <div> {records.filter(record => record.record.toLowerCase().includes(filter.toLowerCase())).length} results </div>
-            <div> {occurrences} occurrences </div>
+            <div> {records.filter(record => record.record.toLowerCase().includes(filter.toLowerCase())).length} / {records.length} records </div>
+            <div> {occurrences} matches </div>
         </div>
-    )
+    ) : null
 }
 
 export default function FilterRecords() {
@@ -49,7 +40,7 @@ export default function FilterRecords() {
     };
 
     return (
-        <div>
+        <div className="filter-container">
             <FilterRecordInfo />
             <input className="filter-records-input" name="filter" onInput={(event) => handleFilterChange(event, setFilter)} type="text" placeholder="Filter records" />
         </div>

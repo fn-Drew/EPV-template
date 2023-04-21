@@ -40,9 +40,21 @@
 }
 
 /* FilterRecords.jsx */
+
+.filter-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .filter-records-input {
     outline: 1px solid var(--secondary);
     padding: .5rem;
+}
+
+.filter-records-info {
+    font-size: .8rem;
+    margin: .5rem 0;
 }
 
 /* components/Notification.jsx */
