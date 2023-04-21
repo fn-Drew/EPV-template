@@ -1,8 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useQuery } from '@tanstack/react-query';
 import { setFilter } from '../reducers/filterReducer';
-import recordService from '../services/records';
 import useUserRecords from '../hooks/useUserRecords';
 import '../App.css';
 
@@ -51,9 +49,9 @@ export default function FilterRecords() {
     };
 
     return (
-        <>
-            <input className="filter-records-input" name="filter" onInput={(event) => handleFilterChange(event, setFilter)} type="text" placeholder="Filter records" />
+        <div>
             <FilterRecordInfo />
-        </>
+            <input className="filter-records-input" name="filter" onInput={(event) => handleFilterChange(event, setFilter)} type="text" placeholder="Filter records" />
+        </div>
     );
 }
