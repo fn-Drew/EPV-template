@@ -7,9 +7,9 @@ const useCreateRecord = () => {
     const queryClient = useQueryClient();
     const dispatch = useDispatch();
     return useMutation((data) => recordsService.create(data.newRecord, data.user), {
-        onSuccess: () => {
+        onSuccess: (encryptedRecord, data) => {
             queryClient.invalidateQueries(['records'])
-            dispatch(setNotification('Record created successfully', 5));
+            dispatch(setNotification(`${data.newRecord.record}`, 5));
         },
         onError: (err) => {
             dispatch(setNotification(err.response.data.error, 5));

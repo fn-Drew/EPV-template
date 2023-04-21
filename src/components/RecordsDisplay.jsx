@@ -95,12 +95,12 @@ export default function RecordsDisplay({ handleLogout }) {
                 {
                     id: 'dummy-1',
                     date: now,
-                    record: 'Welcome to speech analysis!',
+                    record: 'Welcome to Speech Analysis!',
                 },
                 {
                     id: 'dummy-2',
                     date: now,
-                    record: 'Click the green arrow to start recording.',
+                    record: 'Click the green arrow to start dictation.',
                 },
             ].map((record) => ({ ...record, date: formattedDate }));
     };

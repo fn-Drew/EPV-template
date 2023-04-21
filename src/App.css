@@ -14,17 +14,10 @@
 
 .app > section {
     display: flex;
-    padding: 1rem;
-    flex-direction: column;
-    align-items: center;
-}
-
-@media (min-width: 768px) {
-    .app > section {
-        flex-direction: row;
-        gap: 2rem;
-        justify-content: space-evenly;
-    }
+    padding: 2rem 0;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
 }
 
 /* Dictation.jsx */
@@ -35,26 +28,21 @@
 }
 
 .stop-button, .start-button {
-    font-weight: 800;
-    padding: 1rem 1rem;
     border: none;
-    outline-offset: 8px;
     background-color: inherit;
     cursor: pointer;
     color: white;
 }
 
 .stop-svg, .start-svg {
-    width: 4rem;
-    height: 4rem;
+    width: 3rem;
+    height: 3rem;
 }
 
 /* FilterRecords.jsx */
 .filter-records-input {
-    outline: 2px solid var(--secondary);
+    outline: 1px solid var(--secondary);
     padding: .5rem;
-    margin: 1rem 0;
-    width: 100%;
 }
 
 /* components/Notification.jsx */
@@ -62,6 +50,11 @@
     margin: auto;
     outline: 1px solid white;
     outline-offset: .5rem;
+
+    /* truncate notification */
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 /* components/Header.jsx */
