@@ -37,6 +37,13 @@ export default function Dictation() {
         setTranscript(newTranscript);
     };
 
+    // when transcription stops, restart the speech SpeechRecognition
+    recognition.onend = () => {
+        if (listening) {
+            recognition.start();
+        }
+    }
+
     // Toggle the listening state and start/stop the speech recognition accordingly
     const toggleListening = () => {
         setListening(!listening);
