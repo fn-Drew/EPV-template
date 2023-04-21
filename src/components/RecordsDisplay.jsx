@@ -36,7 +36,7 @@ export default function RecordsDisplay({ handleLogout }) {
 
     const formatDay = (date) => {
         const options = {
-            year: 'numeric',
+            // year: 'numeric',
             month: 'long',
             day: 'numeric',
         };

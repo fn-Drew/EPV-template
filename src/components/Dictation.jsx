@@ -77,8 +77,8 @@ export default function Dictation() {
                 <button type="button" onClick={() => testTranscript('really long transcript oh my god it is so long wowzers omg poggers ega goga')}>
                     test
                 </button>
-            *}
-            {/* removed live transcript display temp or maybe forever idk yet */}
+                removed live transcript display temp or maybe forever idk yet
+            */}
         </div>
     );
 }

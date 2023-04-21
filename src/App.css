@@ -68,13 +68,14 @@
 }
 
 .logout-button {
-    height: 3rem;
-    width: 4rem;
+    height: 2rem;
+    width: 3rem;
     border: none;
     background-color: white;
     color: black;
     font-weight: 800;
     margin: 1rem;
+    font-size: .7rem;
     cursor: pointer;
 }
 
@@ -91,17 +92,34 @@
 }
 
 .header-logo{
-    width: 4rem;
-    height: 4rem;
+    width: 3rem;
+    height: 3rem;
     margin: 1rem;
+}
+
+@media (min-width: 768px) {
+    .header-logo {
+        width: 4rem;
+        height: 4rem;
+    }
+    .logout-button {
+        height: 3rem;
+        width: 4rem;
+        font-size: .8rem;
+    }
 }
 
 /* components/Records.jsx */
 .records-container {
-    width: 100%;
     outline: 2px solid var(--secondary);
-    height: 50vh;
+    /* border: 2px solid var(--secondary); */
+    height: 60vh;
+    width: 85%;
     overflow: hidden;
+}
+
+.records-nav > h3 {
+    text-align: center;
 }
 
 @media (min-width: 768px) {
