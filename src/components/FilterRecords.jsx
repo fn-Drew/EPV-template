@@ -16,10 +16,13 @@ function FilterRecordInfo() {
     // Function to count occurrences of the filtered word in all records
     const countOccurrences = () => {
         const filterRegex = new RegExp(filter, 'gi');
-        return records.reduce((count, record) => {
-            const matches = record.record.match(filterRegex);
-            return count + (matches ? matches.length : 0);
-        }, 0);
+        if (records) {
+            return records.reduce((count, record) => {
+                const matches = record.record.match(filterRegex);
+                return count + (matches ? matches.length : 0);
+            }, 0);
+        }
+        return null;
     };
 
     const occurrences = countOccurrences(records, filter);

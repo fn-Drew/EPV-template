@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import recordsService from "../services/records";
 
-const useRecords = (user, token) =>
+const useRecords = (user) =>
     useQuery(
         ["records"],
         () => recordsService.getAllUserRecords(user),
@@ -14,7 +14,7 @@ const useRecords = (user, token) =>
                 }
                 return 3;
             },
-            enabled: !!user && !!token,
+            enabled: !!user
         });
 
 export default useRecords;

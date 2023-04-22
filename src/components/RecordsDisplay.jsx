@@ -9,7 +9,7 @@ export default function RecordsDisplay({ handleLogout }) {
     const [currentDayIndex, setCurrentDayIndex] = useState(0);
 
     const user = useSelector(state => state.user);
-    const { data: records, error, isError, isLoading } = useUserRecords(user, user.token);
+    const { data: records, error, isError, isLoading } = useUserRecords(user);
     const dispatch = useDispatch();
     const filter = useSelector(state => state.filter);
 
