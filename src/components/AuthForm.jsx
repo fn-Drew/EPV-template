@@ -10,7 +10,7 @@ function AuthForm({
     setToggleForm,
 }) {
     const dispatch = useDispatch();
-    const credentials = useSelector(state => state.credentials);
+    const { username, password } = useSelector(state => state.credentials);
     return (
         <form className="form" onSubmit={toggleForm.loginForm ? handleLogin : handleAccountCreation}>
             <div className="form-title">{toggleForm.loginForm ? 'Login' : 'Sign Up '} </div>
@@ -19,9 +19,9 @@ function AuthForm({
                 <input
                     className="input"
                     type="text"
-                    value={credentials.username}
+                    value={username}
                     name="Username"
-                    onChange={({ target }) => dispatch(setCredentials({ ...credentials, username: target.value }))}
+                    onChange={({ target }) => dispatch(setCredentials({ username: target.value, password }))}
                 />
             </div>
             <div className="input-group">
@@ -29,9 +29,9 @@ function AuthForm({
                 <input
                     className="input"
                     type="password"
-                    value={credentials.password}
+                    value={password}
                     name="Password"
-                    onChange={({ target }) => dispatch(setCredentials({ ...credentials, password: target.value }))}
+                    onChange={({ target }) => dispatch(setCredentials({ username, password: target.value }))}
                 />
             </div>
             <button className="form-submit" type="submit">
