@@ -1,18 +1,15 @@
 import { useMutation } from "@tanstack/react-query";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setCredentials } from "../reducers/credentialsReducer";
 import { setNotification } from "../reducers/notificationReducer";
 import { setUser } from "../reducers/userReducer";
 import loginService from "../services/login";
 import recordService from "../services/records"
 
-
 const useLoginUser = () => {
     const dispatch = useDispatch();
-    const credentials = useSelector(state => state.credentials)
     return useMutation((userCredentials) => loginService.login(userCredentials), {
-        onSuccess: async () => {
-            const loggedUser = await loginService.login(credentials);
+        onSuccess: async (loggedUser) => {
             window.localStorage.setItem(
                 "recUserCreds",
                 JSON.stringify(loggedUser)
