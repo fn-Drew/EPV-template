@@ -11,11 +11,11 @@ const algorithm = "aes-256-cbc";
 const key = config.CRYPTO_KEY;
 const iv = crypto.randomBytes(16);
 
-recordRouter.get("/", async (request, response) => {
+/* recordRouter.get("/", async (request, response) => {
     const records = await Record.find({});
     response.status(200).json(records).end();
 });
-
+*/
 // get unencrypted records
 recordRouter.get("/:id", async (request, response) => {
 
@@ -53,6 +53,7 @@ recordRouter.get("/:id", async (request, response) => {
     response.status(200).json(decryptedRecords).end();
 });
 
+// post encrypted records
 recordRouter.post("/:id", async (request, response) => {
 
     const decodedToken = jwt.verify(tokenExtractor(request), SECRET)
