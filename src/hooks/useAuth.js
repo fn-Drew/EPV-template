@@ -7,7 +7,7 @@ import useLoginUser from './useLoginUser'
 import { setUser } from '../reducers/userReducer';
 import { setNotification } from '../reducers/notificationReducer';
 
-export default function useAuth(setToggleForm) {
+export default function useAuth() {
     // if need to get loading, error, etc. from rq
     // const { mutate: loginUserMutation, isLoading } = useLoginUser()
     const credentials = useSelector(state => state.credentials)
@@ -23,11 +23,8 @@ export default function useAuth(setToggleForm) {
             recordService.setToken(currentUser.token);
             dispatch(setUser(currentUser));
             dispatch(setNotification(`Welcome back, ${currentUser.username}!`, 5));
-            setToggleForm({ accountForm: false, loginForm: false });
-        } else {
-            setToggleForm({ accountForm: false, loginForm: true });
         }
-    }, [dispatch, setToggleForm]);
+    }, [dispatch]);
 
     const handleAccountCreation = async (event) => {
         event.preventDefault();
@@ -42,7 +39,6 @@ export default function useAuth(setToggleForm) {
     const handleLogout = () => {
         window.localStorage.removeItem("recUserCreds");
         dispatch(setUser(null))
-        setToggleForm({ accountForm: false, loginForm: true });
     };
 
     return {

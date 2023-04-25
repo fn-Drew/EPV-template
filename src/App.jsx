@@ -10,14 +10,14 @@ import "./App.css";
 import FilterRecords from "./components/FilterRecords";
 
 function App() {
-    const [toggleForm, setToggleForm] = useState({ accountForm: false, loginForm: false });
+    const [toggleForm, setToggleForm] = useState(true);
 
     // refactor useAuth to redux actions?
     const {
         handleAccountCreation,
         handleLogin,
         handleLogout,
-    } = useAuth(setToggleForm);
+    } = useAuth();
 
     return (
         <div className="app">

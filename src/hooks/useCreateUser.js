@@ -7,7 +7,6 @@ const useCreateUser = () => {
     const dispatch = useDispatch();
     return useMutation((userCredentials) => userService.create(userCredentials), {
         onSuccess: (data) => {
-            console.log("data", data);
             dispatch(setNotification(`Welcome, ${data.username}! Your account has been created.`, 5));
         },
         onError: (err) => {
