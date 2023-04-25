@@ -66,7 +66,6 @@ export default function RecordsDisplay({ handleLogout }) {
 
     const generateDummyData = () => {
         const now = new Date();
-        const formattedDate = formatDay(now);
         return isLoading ?
             [
                 {
@@ -102,7 +101,7 @@ export default function RecordsDisplay({ handleLogout }) {
                     date: now,
                     record: 'Click the green arrow to start dictation.',
                 },
-            ].map((record) => ({ ...record, date: formattedDate }));
+            ]
     };
 
     const displayRecords = records && records.length > 0 ? records : generateDummyData();
