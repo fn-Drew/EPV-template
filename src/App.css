@@ -154,6 +154,11 @@
     border-bottom: 1px solid var(--secondary);
 }
 
+.highlight {
+    background: yellow;
+    color: var(--primary);
+}
+
 .record:nth-child(odd) {
     background-color: hsl(0, 0%, 5%);
 }

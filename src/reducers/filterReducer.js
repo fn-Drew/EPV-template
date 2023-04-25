@@ -8,7 +8,8 @@ const filterSlice = createSlice({
     reducers: {
         setFilter(state, action) {
             const filter = action.payload
-            return filter
+            const sanitizedFilter = filter.replaceAll(/[&/\\#,+()$~%.^'":*?<>{}]/g, "");
+            return sanitizedFilter
         },
     }
 })

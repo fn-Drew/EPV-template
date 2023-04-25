@@ -3,17 +3,16 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import "../App.css";
 import { setNotification } from '../reducers/notificationReducer';
+import HighlightFilteredWords from './HighlightFilteredWords';
 import useUserRecords from '../hooks/useUserRecords';
 
 export default function RecordsDisplay({ handleLogout }) {
     const [currentDayIndex, setCurrentDayIndex] = useState(0);
-
     const user = useSelector(state => state.user);
     const { data: records, error, isError, isLoading } = useUserRecords(user);
     const dispatch = useDispatch();
     const filter = useSelector(state => state.filter);
 
-    // FIX: for some reason very slow, maybe because # of retries with react query?
     if (isError) {
         if (error.response.status === 401) {
             handleLogout();
@@ -26,9 +25,7 @@ export default function RecordsDisplay({ handleLogout }) {
             hour: '2-digit',
             minute: '2-digit',
             hour12: true,
-
         };
-        // return new Intl.DateTimeFormat('en-US', options).format(new Date(date));
         const formattedDate = new Intl.DateTimeFormat('en-US', options).format(new Date(date));
         const [hour, minute, period] = formattedDate.split(/[:\s]/);
         return `${parseInt(hour, 10)}:${minute} ${period}`;
@@ -149,7 +146,9 @@ export default function RecordsDisplay({ handleLogout }) {
                 <div key={day} className="records-list">
                     {paginatedRecords.map((record) => (
                         <div className="record" key={record.id}>
-                            <div className="transcript">{record.record}</div>
+                            <HighlightFilteredWords filter={filter}>
+                                {record.record}
+                            </HighlightFilteredWords>
                             <div className="timestamp">{formatDate(record.date)}</div>
                         </div>
                     ))}
