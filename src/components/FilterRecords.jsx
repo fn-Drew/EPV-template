@@ -25,7 +25,7 @@ function FilterRecordInfo() {
         return null;
     };
 
-    const occurrences = countOccurrences(records, filter);
+    const occurrences = countOccurrences();
 
     return filter && !isLoading ? (
         <div className="filter-records-info">
@@ -45,7 +45,7 @@ export default function FilterRecords() {
     return (
         <div className="filter-container">
             <FilterRecordInfo />
-            <input className="filter-records-input" name="filter" onInput={(event) => handleFilterChange(event, setFilter)} type="text" placeholder="Filter records" />
+            <input className="filter-records-input" name="filter" onInput={(event) => handleFilterChange(event)} type="text" placeholder="Filter records" />
         </div>
     );
 }
