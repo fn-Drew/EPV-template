@@ -12,7 +12,6 @@ if (recognition) {
 
 export default function Dictation() {
     const [listening, setListening] = useState(false);
-    const [transcript, setTranscript] = useState('');
     const user = useSelector(state => state.user);
     const createRecordMutation = useCreateRecord();
 
@@ -34,12 +33,7 @@ export default function Dictation() {
         if (newTranscript !== '') {
             createRecordMutation.mutate({ newRecord: { record: newTranscript }, user });
         }
-        setTranscript(newTranscript);
     };
-
-    // const testTranscript = (test) => {
-    //     createRecordMutation.mutate({ newRecord: { record: test }, user });
-    // }
 
     // when transcription stops, restart the speech SpeechRecognition
     recognition.onend = () => {
@@ -73,12 +67,6 @@ export default function Dictation() {
                     </svg>
                 }
             </button>
-            {/*
-                <button type="button" onClick={() => testTranscript('really long transcript oh my god it is so long wowzers omg poggers ega goga')}>
-                    test
-                </button>
-                removed live transcript display temp or maybe forever idk yet
-            */}
         </div>
     );
 }
