@@ -44,14 +44,16 @@
 
 .stop-button, .start-button {
     border: none;
-    background-color: inherit;
+    border: 2px solid var(--secondary);
+    box-shadow: 0 0 10px 5px var(--primary);
+    background-color: black;
     cursor: pointer;
     color: white;
 }
 
 .stop-svg, .start-svg {
-    width: 3rem;
-    height: 3rem;
+    width: 2rem;
+    height: 2rem;
 }
 
 /* FilterRecords.jsx */
@@ -65,8 +67,8 @@
 .filter-records-input {
     outline: 2px solid var(--secondary);
     box-shadow: 0 0 10px 5px var(--primary);
+    padding: .7rem;
     border: none;
-    padding: .5rem 1rem;
     background-color: black;
     color: white;
 }
