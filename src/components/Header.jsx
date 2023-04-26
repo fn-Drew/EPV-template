@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 import Notification from './Notification';
 import '../App.css';
 
@@ -15,7 +14,7 @@ export default function Header({ handleLogout }) {
             <Notification />
             <section className="header-section">
                 <button className="logout-button" type="button" onClick={handleLogout}>
-                    logout
+                    Log Out
                 </button>
             </section>
         </header >

@@ -1,7 +1,7 @@
 :root {
     --primary: hsl(0, 0%, 0%);
-    --secondary: hsl(0, 0%, 40%);
-    --tertiary: hsl(209, 100%, 50%);
+    --secondary: hsl(0, 0%, 19%);
+    --accent: hsl(209, 100%, 70%);
 }
 
 /* App.jsx */
@@ -16,8 +16,23 @@
     display: flex;
     padding: 2rem 0;
     flex-direction: row;
+    width: 85%;
+    justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+    .app > section{
+        width: 50%;
+    }
+}
+
+.app-auth {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    justify-content: space-evenly;
+    height: 100vh;
 }
 
 /* Dictation.jsx */
@@ -48,8 +63,12 @@
 }
 
 .filter-records-input {
-    outline: 1px solid var(--secondary);
-    padding: .5rem;
+    outline: 2px solid var(--secondary);
+    box-shadow: 0 0 10px 5px var(--primary);
+    border: none;
+    padding: .5rem 1rem;
+    background-color: black;
+    color: white;
 }
 
 .filter-records-info {
@@ -62,7 +81,6 @@
     margin: auto;
     outline: 1px solid white;
     outline-offset: .5rem;
-
     /* truncate notification */
     text-overflow: ellipsis;
     overflow: hidden;
@@ -72,6 +90,8 @@
 /* components/Header.jsx */
 .header-container {
     position: sticky;
+    box-shadow: 0 0 10px 5px var(--primary);
+    background-color: black;
     top: 0;
     border-bottom: 2px solid var(--secondary);
     display: flex;
@@ -80,20 +100,17 @@
 }
 
 .logout-button {
-    height: 2rem;
-    width: 3rem;
     border: none;
     background-color: white;
     color: black;
-    font-weight: 800;
+    font-weight: 600;
     margin: 1rem;
-    font-size: .7rem;
+    padding: .5rem 1rem;
     cursor: pointer;
 }
 
 .logout-button:hover {
-    background-color: var(--tertiary);
-    color: white;
+    background-color: var(--accent);
 }
 
 .header-section{
@@ -114,19 +131,15 @@
         width: 4rem;
         height: 4rem;
     }
-    .logout-button {
-        height: 3rem;
-        width: 4rem;
-        font-size: .8rem;
-    }
 }
 
 /* components/Records.jsx */
 .records-container {
+    background-color: black;
+    box-shadow: 0 0 10px 5px var(--primary);
     outline: 2px solid var(--secondary);
-    /* border: 2px solid var(--secondary); */
-    height: 60vh;
     width: 85%;
+    height: 60vh;
     overflow: hidden;
 }
 
@@ -137,7 +150,6 @@
 @media (min-width: 768px) {
     .records-container {
         width: 50%;
-        outline: 2px solid var(--secondary);
     }
 }
 
@@ -155,16 +167,14 @@
 }
 
 .highlight {
-    background: yellow;
+    background: var(--accent);
     color: var(--primary);
 }
 
+/* idk if i like this or not
 .record:nth-child(odd) {
-    background-color: hsl(0, 0%, 5%);
-}
-
-.transcript {
-}
+    background-color: hsl(0, 0%, 3%);
+} */
 
 .timestamp {
     color: gray;
@@ -178,21 +188,15 @@
     border-bottom: 2px solid var(--secondary);
 }
 
-/* date between buttons */
-.records-nav > h3 {
-    align-self: center;
-}
-
 .records-nav-button {
     border: none;
     background: inherit;
-    padding: .5rem 1rem;
     cursor: pointer;
     color: white;
 }
 
 .records-nav-button:hover {
-    color: var(--tertiary);
+    color: var(--accent);
 }
 
 .records-nav-button:disabled {
@@ -212,27 +216,26 @@
 /* components/AuthForm.jsx */
 .form {
     display: flex;
-    height: 100vh;
-    justify-content: center;
     flex-direction: column;
     gap: 2rem;
+    border: 2px solid var(--secondary);
+    box-shadow: 0 0 10px 5px var(--primary);
+    background-color: black;
+    padding: 2rem;
 }
 
 .form-title {
     font-size: 2rem;
     text-align: center;
-    margin: 1rem 0;
 }
 
 .form-submit {
-    width: 100%;
     font-size: 1rem;
+    font-weight: 600;
     margin: 2rem 0;
     border: none;
-    align-self: center;
-    color: white;
-    background-color: var(--tertiary);
-    padding: 1rem;
+    background-color: var(--accent);
+    padding: 1rem .5rem;
     cursor: pointer;
 }
 
@@ -242,7 +245,7 @@
 }
 
 .form-alt-link {
-    color: var(--tertiary);
+    color: var(--accent);
     cursor: pointer;
     /* remove default button styling */
     border: none;
@@ -257,11 +260,5 @@
     padding: .5rem 0;
     padding-left: 1rem;
     box-sizing: border-box;
-    background-color: hsl(0, 0%, 90%);
     border: none;
-}
-
-.input-label {
-    font-size: 1rem;
-    text-align: left;
 }

@@ -1,10 +1,10 @@
 :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-    color: rgba(255, 255, 255, 0.87);
+    color: white;
 }
 
 body {
-    background-color: black;
+    background-color: hsl(0, 0%, 7%);
     margin: 0;
     place-items: center;
     min-width: 320px;

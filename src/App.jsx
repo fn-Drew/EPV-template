@@ -22,7 +22,6 @@ function App() {
     return (
         <div className="app">
             <DisplayWhenLoggedIn displayWhenNotLoggedIn>
-                <Notification />
                 <AuthForm
                     handleLogin={handleLogin}
                     toggleForm={toggleForm}
