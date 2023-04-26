@@ -7,20 +7,58 @@
 }
 
 /* App.jsx */
-.app {
+.app-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     max-height: 100vh;
 }
 
+.app {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    height: 100vh;
+    max-height: 100vh;
+    width: 90%;
+    max-width: 700px;
+}
+
 .app > section {
     display: flex;
-    padding: 2rem 0;
-    flex-direction: row;
-    width: 85%;
-    max-width: 700px;
-    justify-content: space-between;
+    gap: 1rem;
+    justify-content: between;
+    width: 100%;
+    height: 60px;
+}
+
+.filter-records-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* add a divider between columns */ 
+    gap: .5rem;
+    outline: 2px solid var(--secondary);
+    box-shadow: var(--shadow);
+    background-color: black;
+    padding: .5rem;
+    border-radius: var(--radius);
+    width: 100%;
+}
+
+.filter-info-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    /* add a border between all elements */ 
+    border-right: 2px solid var(--secondary);
+}
+
+.filter-info-box:last-child {
+    border-right: none;
 }
 
 .app-auth {
@@ -46,35 +84,59 @@
     background-color: black;
     cursor: pointer;
     color: white;
+    height: 100%;
+    width: 100%;
     border-radius: var(--radius);
 }
 
-.stop-svg, .start-svg {
-    width: 2rem;
-    height: 2rem;
+.stop-button:hover, .start-button:hover {
+    box-shadow: 0 0 10px 5px var(--accent);
+    outline: 2px solid var(--accent);
+    transition: all .1s ease-in-out;
+    transform: translateY(-4px);
+}
+
+.svg {
+    height: 100%;
+    width: 100%;
 }
 
 /* FilterRecords.jsx */
 
 .filter-container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.filter-records-input {
     border-radius: var(--radius);
     outline: 2px solid var(--secondary);
     box-shadow: var(--shadow);
-    padding: .7rem;
-    border: none;
     background-color: black;
-    color: white;
+    width: 100%;
 }
 
-.filter-records-info {
-    font-size: .8rem;
-    margin: .5rem 0;
+/* add a red border to the filter container when it is focused */
+.filter-container:focus-within {
+    outline: 2px solid var(--accent);
+    transition: box-shadow .1s ease-in-out;
+    box-shadow: 0 0 10px 5px var(--accent);
+}
+
+.filter-records-input {
+    background-color: inherit;
+    border: none;
+    padding: 1rem;
+    color: white;
+    width: 100%;
+}
+
+.filter-records-input:focus {
+    outline: none;
+}
+
+#search-icon {
+    width: 2rem;
+    height: 2rem;
+    padding: .5rem;
+    color: gray;
+    z-index: 1;
 }
 
 /* components/Notification.jsx */
@@ -134,9 +196,8 @@
     background-color: black;
     box-shadow: var(--shadow);
     outline: 2px solid var(--secondary);
-    width: 85%;
+    width: 100%;
     height: 60vh;
-    max-width: 700px;
     overflow: hidden;
 }
 

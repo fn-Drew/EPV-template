@@ -3,11 +3,11 @@ import RecordsDisplay from "./components/RecordsDisplay";
 import useAuth from "./hooks/useAuth";
 import Dictation from "./components/Dictation";
 import DisplayWhenLoggedIn from "./components/DisplayWhenLoggedIn";
-import Notification from "./components/Notification";
 import AuthForm from "./components/AuthForm";
 import Header from "./components/Header";
-import "./App.css";
 import FilterRecords from "./components/FilterRecords";
+import FilterRecordInfo from './components/FilterRecordInfo';
+import "./App.css";
 
 function App() {
     const [toggleForm, setToggleForm] = useState(true);
@@ -20,7 +20,7 @@ function App() {
     } = useAuth();
 
     return (
-        <div className="app">
+        <div className="app-container">
             <DisplayWhenLoggedIn displayWhenNotLoggedIn>
                 <AuthForm
                     handleLogin={handleLogin}
@@ -31,11 +31,14 @@ function App() {
             </DisplayWhenLoggedIn>
             <DisplayWhenLoggedIn>
                 <Header handleLogout={handleLogout} />
-                <section>
-                    <Dictation />
-                    <FilterRecords />
-                </section>
-                <RecordsDisplay handleLogout={handleLogout} />
+                    <div className="app">
+                        <section>
+                            <Dictation />
+                            <FilterRecordInfo />
+                        </section>
+                        <FilterRecords />
+                        <RecordsDisplay handleLogout={handleLogout} />
+                    </div>
             </DisplayWhenLoggedIn>
         </div>
     );
