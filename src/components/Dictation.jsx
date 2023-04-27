@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useCreateRecord from '../hooks/useCreateRecords';
 import '../App.css';
@@ -6,14 +6,41 @@ import '../App.css';
 // Initialize SpeechRecognition, if it's available in the browser
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = SpeechRecognition ? new SpeechRecognition() : null;
-if (recognition) {
-    recognition.continuous = true;
-}
 
 export default function Dictation() {
     const [listening, setListening] = useState(false);
     const user = useSelector(state => state.user);
     const createRecordMutation = useCreateRecord();
+
+    // Use useEffect to stop speech recognition when the component is unmounted
+    useEffect(() => {
+        if (recognition) {
+            recognition.continuous = true;
+            // Send the transcript to the server when the user stops speaking
+            // Can send a lot of requests, maybe optomize
+            recognition.onresult = (event) => {
+                const newTranscript = event.results[event.results.length - 1][0].transcript;
+                if (newTranscript !== '') {
+                    createRecordMutation.mutate({ newRecord: { record: newTranscript }, user });
+                }
+            };
+
+            // when transcription stops, restart the speech SpeechRecognition
+            recognition.onend = () => {
+                if (listening) {
+                    recognition.start();
+                }
+            }
+        }
+
+        return () => {
+            if (recognition) {
+                recognition.onend = null; // remove the event handler
+                recognition.onresult = null; // remove the event handler
+                recognition.stop(); // stop the speech recognition
+            }
+        };
+    }, []); // Empty array means this effect runs once on mount and cleanup on unmount
 
     // If SpeechRecognition is not available, show an error message
     if (!recognition) {
@@ -24,22 +51,6 @@ export default function Dictation() {
                 click here for more info
             </a>)
         </p>
-    }
-
-    // Send the transcript to the server when the user stops speaking
-    // Can send a lot of requests, maybe optomize
-    recognition.onresult = (event) => {
-        const newTranscript = event.results[event.results.length - 1][0].transcript;
-        if (newTranscript !== '') {
-            createRecordMutation.mutate({ newRecord: { record: newTranscript }, user });
-        }
-    };
-
-    // when transcription stops, restart the speech SpeechRecognition
-    recognition.onend = () => {
-        if (listening) {
-            recognition.start();
-        }
     }
 
     // Toggle the listening state and start/stop the speech recognition accordingly

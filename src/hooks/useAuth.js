@@ -24,6 +24,7 @@ export default function useAuth() {
             dispatch(setUser(currentUser));
             dispatch(setNotification(`Welcome back, ${currentUser.username}!`, 5));
         }
+
     }, [dispatch]);
 
     const handleAccountCreation = async (event) => {
@@ -38,6 +39,7 @@ export default function useAuth() {
 
     const handleLogout = () => {
         window.localStorage.removeItem("recUserCreds");
+
         dispatch(setUser(null))
     };
 

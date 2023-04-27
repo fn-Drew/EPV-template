@@ -28,12 +28,12 @@ export default function FilterRecordInfo() {
 
     return filter && !isLoading ? (
         <div className="filter-records-info">
-            <div className="filter-info-box"> {records.filter(record => record.record.toLowerCase().includes(filter.toLowerCase())).length} / {records.length} records </div>
-            <div className="filter-info-box"> {occurrences} matches </div>
+            <div className="filter-info-box"> {records.filter(record => record.record.toLowerCase().includes(filter.toLowerCase())).length} / {records.length.toLocaleString()} records </div>
+            <div className="filter-info-box"> {occurrences.toLocaleString()} matches </div>
         </div>
     ) :
         <div className="filter-records-info">
-            <div className="filter-info-box"> {records.length} records </div>
-            <div className="filter-info-box"> {occurrences} words </div>
+            <div className="filter-info-box"> {records.length.toLocaleString()} records </div>
+            <div className="filter-info-box"> {occurrences.toLocaleString()} words </div>
         </div>
 }
