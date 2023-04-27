@@ -201,6 +201,10 @@
     overflow: hidden;
 }
 
+.records-container > h2 { 
+    text-align: center;
+}
+
 .records-nav > h3 {
     text-align: center;
 }

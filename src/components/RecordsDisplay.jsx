@@ -126,7 +126,7 @@ export default function RecordsDisplay({ handleLogout }) {
         }
     }
 
-    return days ? (
+    return Object.keys(days).length > 0 ? (
         days.slice(currentDayIndex, currentDayIndex + 1).map(([day, paginatedRecords]) => (
             <div className="records-container" key={day}>
                 {/* Display only the current day based on currentDayIndex */}
@@ -155,7 +155,10 @@ export default function RecordsDisplay({ handleLogout }) {
                 </div>
             </div>
         ))
-    ) : null;
+    ) :
+        <div className="records-container">
+            <h2>No records found :/</h2>
+        </div>;
 }
 
 RecordsDisplay.propTypes = {
